@@ -1,7 +1,7 @@
 
 
-export default function main(){
+export default function Main(){
     return<>
-        <h1>asdfsdf</h1>
+        <h1>this is main page</h1>
     </>
 }
