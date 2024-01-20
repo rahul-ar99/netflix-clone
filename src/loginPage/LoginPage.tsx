@@ -1,9 +1,10 @@
 import Link from "next/link"
+import Footer from "../components/Footer"
 
 export default function LoginPage(){
     return(
-    <>
-        <div style={{backgroundImage:'linear-gradient(to bottom,rgba(0, 0, 0, 0.495),rgba(0, 0, 0, 0.313),rgba(0, 0, 0, 0.57)),url(../../assets/images/spotlight_1.jpg)'}} className="flex flex-col w-screen px-80 border-b-8 border-neutral-800">
+        <>
+        <div style={{backgroundImage:'linear-gradient(to bottom,rgba(0, 0, 0, 0.495),rgba(0, 0, 0, 0.313),rgba(0, 0, 0, 0.57)),url(../../assets/images/spotlight_1.jpg)'}} className="flex flex-col w-screen border-b-8 border-neutral-800">
             <nav className="flex w-full justify-between items-center">
                 <h1 className="">
                     <Link href="/">
@@ -12,103 +13,37 @@ export default function LoginPage(){
                         </div>
                     </Link>
                 </h1>
-                <div className="flex justify-between h-max gap-x-5">
-                    <select className="bg-black border px-3" name="language" id="language">
-                        <option value="english">English</option>
-                        <option value="malayalam">Malayalam</option>
-                    </select>
-                    <button className="bg-red-600 px-3 py-1 rounded-md">Sign in</button>
-                </div>
             </nav>
-                <div className="flex flex-col justify-center items-center w-full py-32">
-                    <div className="text-center">
-                        <h3 className="text-5xl font-black py-3">The biggest Indian hits. Ready to watch here from<br/>$149.</h3>
-                        <p className="text-xl py-3">Join today. Cancel anytime.</p>
-                        <p className="text-xl py-3">Ready to watch? Enter your email to create or restart your membership.</p>
-                    </div>
-                    <div>
-                        <form action="/" className="flex gap-4">
-                            <input className="w-56 bg-black bg-opacity-2 border px-4 py-2" type="email" placeholder="Email address"/>
-                            <input className="bg-red-600 px-3 py-1 rounded-md" type="submit" value="Get Started >"/>
-                        </form>
+            <div className="flex flex-col justify-center items-center w-full py-32">
+                <div className="bg-neutral-950/[0.6] p-14 w-[450px]">
+                    <h3 className="mb-8 text-3xl">Sign In</h3>
+                    <form action="/" className="flex flex-col gap-6">
+                        <input className="h-14 w-full rounded px-3 bg-stone-800/[0.7]" type="email" placeholder="Email or Phone number"/>
+                        <input className="h-14 w-full rounded px-3 bg-neutral-900/[0.8]" type="password" placeholder="Password" />  
+                        <input className="h-12 w-full rounded bg-red-600 mt-3" type="submit" value="Sign In"/>
+                    </form>
+                    <div className="text-slate-600">
+
+                        <div className="flex justify-between">
+                            <div>
+                                <input type="checkbox" id="rememberme" />
+                                <label htmlFor="rememberme">Remember me</label>
+                            </div>
+                            <p>need help?</p>
+                        </div>
+                        <div className="my-4">
+                            <p>New to Netflix?<span className="text-white">Sign up now</span></p>
+                        </div>
+                        <div>
+                            <p>this page is protected by google recaptcha to ensure you're not a bot. <span className="text-blue-600">Learn more.</span></p>
+                        </div>
+
                     </div>
                 </div>
             </div>
-            
-            <div>
-                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800">
-                    <div className="w-[600px]">
-                        <h4 className="text-5xl font-bold mb-7">Enjoy on your TV</h4>
-                        <p className="text-2xl text-wrap ">Watch on smart TVs, PlayStation, Xbox, Chromecast, Apply TV, Blu-ray players and more.</p>
-                    </div>
-                    <div className="relative ">
-                        <img src="assets/images/tv.png" alt=""  className="z-0"/>
-                        <video autoPlay loop muted 
-                            src="assets/videos/tv_video.m4v"  
-                            className="absolute top-24 left-20 z-[-1]"
-                        ></video>
-                    </div>
-                </div>
-                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800">
-                    <div className="relative">
-                        <img src="assets/images/mobile.jpg" alt=""  className="z-0"/>
-                        {/* <video autoPlay loop muted 
-                            src="assets/videos/tv_video.m4v"  
-                            className="absolute top-24 left-20 z-[-1]"
-                        ></video> */}
-                        <div className="flex border-2 rounded-xl p-2 absolute bottom-5 bg-black left-36 items-center">
-                            <div className="w-20 mr-10">
-                                <img src="assets/images/boxshot.png" alt=""/>
-                            </div>
-                            <div className="mr-10">
-                                <p className="text-xl font-bold">Stranger Things</p>
-                                <p className="text-blue-700">Downloading...</p>
-                            </div>
-                            <div>a</div>
-                        </div>
-                    </div>
-                    <div className="w-[600px]">
-                        <h4 className="text-5xl font-bold mb-7">Download your shows to watch offline</h4>
-                        <p className="text-2xl text-wrap ">Save your favourites easly and always have somethings to watch.</p>
-                    </div>
-                </div>
-                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800">
-                    <div className="w-[600px]">
-                        <h4 className="text-5xl font-bold mb-7">Enjoy on your TV</h4>
-                        <p className="text-2xl text-wrap ">Watch on smart TVs, PlayStation, Xbox, Chromecast, Apply TV, Blu-ray players and more.</p>
-                    </div>
-                    <div className="relative ">
-                        <img src="assets/images/tv.png" alt=""  className="z-0"/>
-                        <video autoPlay loop muted 
-                            src="assets/videos/tv_video.m4v"  
-                            className="absolute top-24 left-20 z-[-1]"
-                        ></video>
-                    </div>
-                </div>
-                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800">
-                    <div className="relative">
-                        <img src="assets/images/mobile.jpg" alt=""  className="z-0"/>
-                        {/* <video autoPlay loop muted 
-                            src="assets/videos/tv_video.m4v"  
-                            className="absolute top-24 left-20 z-[-1]"
-                        ></video> */}
-                        <div className="flex border-2 rounded-xl p-2 absolute bottom-5 bg-black left-36 items-center">
-                            <div className="w-20 mr-10">
-                                <img src="assets/images/boxshot.png" alt=""/>
-                            </div>
-                            <div className="mr-10">
-                                <p className="text-xl font-bold">Stranger Things</p>
-                                <p className="text-blue-700">Downloading...</p>
-                            </div>
-                            <div>a</div>
-                        </div>
-                    </div>
-                    <div className="w-[600px]">
-                        <h4 className="text-5xl font-bold mb-7">Download your shows to watch offline</h4>
-                        <p className="text-2xl text-wrap ">Save your favourites easly and always have somethings to watch.</p>
-                    </div>
-                </div>
+            <Footer />
             </div>
-    </>
+
+        </>
     )
 }1
