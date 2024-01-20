@@ -1,4 +1,4 @@
-import LoginPage from "@/loginPage/LoginPage"
+// import LoginPage from "@/loginPage/page"
 import Link from "next/link"
 import Footer from "../components/Footer"
 
@@ -20,7 +20,10 @@ export default function Intro() {
                         <option value="english">English</option>
                         <option value="malayalam">Malayalam</option>
                     </select>
-                    <button className="bg-red-600 px-3 py-1 rounded-md">Sign in</button>
+                    <Link href="/loginpage">
+                        <button className="bg-red-600 px-3 py-1 rounded-md">Sign in</button>
+
+                    </Link>
                 </div>
             </nav>
                 <div className="flex flex-col justify-center items-center w-full py-32">

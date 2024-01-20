@@ -1,12 +1,10 @@
-import Intro from "../intro/intro"
-import LoginPage from "@/loginPage/LoginPage"
-
+import Intro from "./intro/page"
+import Link from "next/link"
 
 export default function Home() {
   return (
     <>
-      {/* <Intro /> */}
-      <LoginPage />
+      <Intro />
     </>
   )
 }
