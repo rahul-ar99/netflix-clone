@@ -1,10 +1,13 @@
+"use client";
+
 import Link from "next/link"
 import Footer from "../components/Footer"
-import { useState } from "react"
+
+import React, {useState} from "react"
 
 export default function LoginPage(){
 
-    const [emailError, setEmailError] = useState("")
+    const [login, setlogin] = useState(true)
 
     return(
         <>
