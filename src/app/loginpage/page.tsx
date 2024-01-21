@@ -2,17 +2,33 @@
 
 import Link from "next/link"
 import Footer from "../components/Footer"
-
+import Navbar from "../components/Navbar";
 import React, {useState} from "react"
+import axios from "axios"
+import { BASE_URL } from "../axiosConfig";
+
+
+
 
 export default function LoginPage(){
+    
+    const[username, setUsername] = useState("")
+    const [password, setPassword] = useState("")
 
-    const [login, setlogin] = useState(true)
+    const handleSubmit = (e) => {
+        axios
+            .post(`${BASE_URL}/auth/token/`,{username,password})
+            .then((Response) =>{
+                console.log(Response)
+            }).catch((error)=>{
+
+            })
+    }
 
     return(
         <>
         <div style={{backgroundImage:'linear-gradient(to bottom,rgba(0, 0, 0, 0.495),rgba(0, 0, 0, 0.313),rgba(0, 0, 0, 0.57)),url(../../assets/images/spotlight_1.jpg)'}} className="flex flex-col w-screen border-b-8 border-neutral-800">
-            <nav className="flex w-full justify-between items-center">
+            {/* <nav className="flex w-full justify-between items-center">
                 <h1 className="">
                     <Link href="/">
                         <div className="">
@@ -20,15 +36,28 @@ export default function LoginPage(){
                         </div>
                     </Link>
                 </h1>
-            </nav>
+            </nav> */}
+            <Navbar />
             <div className="flex flex-col justify-center items-center w-full py-32">
                 <div className="bg-neutral-950/[0.6] p-14 w-[450px]">
                     <h3 className="mb-8 text-3xl">Sign In</h3>
-                    <form  className="flex flex-col gap-6">
-                        <input className="h-14 w-full rounded px-3 bg-stone-800/[0.7]" type="email" placeholder="Email or Phone number"/>
+                    <form onSubmit={handleSubmit}  className="flex flex-col gap-6">
+                        <input 
+                            className="h-14 w-full rounded px-3 bg-stone-800/[0.7]" 
+                            type="email" 
+                            placeholder="Email or Phone number"
+                            onChange={(e)=>setUsername(e.target.value)}
+                            />
                         <p></p>
-                        <input className="h-14 w-full rounded px-3 bg-neutral-900/[0.8]" type="password" placeholder="Password" />  
-                        <input className="h-12 w-full rounded bg-red-600 mt-3" type="submit" value="Sign In"/>
+                        <input 
+                            className="h-14 w-full rounded px-3 bg-neutral-900/[0.8]" 
+                            type="password" 
+                            placeholder="Password" 
+                            onChange={(e)=>setPassword(e.target.value)}
+                            
+                            />  
+                            <button to="/auth/create">Sign In</button>
+                        {/* <input className="h-12 w-full rounded bg-red-600 mt-3" type="submit" value="Sign In"/> */}
                     </form>
                     <div className="text-slate-600">
 
