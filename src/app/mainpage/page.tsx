@@ -4,6 +4,7 @@ import Link from "next/link"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
 import { useEffect, useState } from "react"
+import { MOVIE_IMG_URL } from "../axiosConfig"
 
 export default function(){
 
@@ -24,7 +25,8 @@ export default function(){
     useEffect(()=>{
         getMovie()
     },[])
-    console.log(movieList)
+    
+    // console.log(movieList)
 
 
     return(
@@ -48,19 +50,17 @@ export default function(){
                     <button>^</button>
                     <div className="flex gap-2 w-screen overflow-scroll">
 
-                        { arr.map((i)=>{
-                            img_no=img_no+1
-                            if(img_no>96){
-                                img_no=1
-                            }
-
+                        { movieList.map((movie)=>{
+                            // let img_path = MOVIE_BASE_URL + movie.poster_path
+                            // console.log(img_path)
+                          
                             return (
-                                <Link href={`/mainpage/${img_no}`}>
+                                <Link href={`/mainpage/${movie.id}`}>
                                     <div className="flex flex-col items-center">
-                                        <div className="w-[299px] h-[168px]">
-                                            <img src={`/assets/images/movies/movie_images${img_no}.jpg`} alt="asdf" />
+                                        <div className="w-[299px] h-[368px] flex items-baseline justify-end">
+                                            <img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="asdf" />
                                         </div>
-                                        <p className="mt-2 text-lg">lift 1</p>
+                                        <p className="mt-2 text-lg">{movie.title}</p>
                                     </div>
                                 </Link>
                             )
