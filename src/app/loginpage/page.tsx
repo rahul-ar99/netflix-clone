@@ -7,6 +7,7 @@ import Navbar from "../components/Navbar";
 import React, {useState} from "react"
 import axios from "axios"
 import { BASE_URL } from "../axiosConfig";
+import { MOVIE_BASE_URL } from "../axiosConfig";
 
 
 
@@ -23,7 +24,6 @@ export default function LoginPage(){
     
 
 
-
     // submit function
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -32,7 +32,8 @@ export default function LoginPage(){
             .post(`${BASE_URL}/auth/token/`,{username,password})
             .then((Response) =>{
                 console.log(Response)
-                router.push("/mainpage");
+                // router.push("/mainpage");
+                router.push(MOVIE_BASE_URL)
             }).catch((error)=>{
                 console.log(error.response)
                 setMessage(error.response.data.detail)
@@ -75,7 +76,7 @@ export default function LoginPage(){
                             <p>need help?</p>
                         </div>
                         <div className="my-4">
-                            <p>New to Netflix?<span className="text-white">Sign up now</span></p>
+                            <p>New to Netflix?<span className="text-white" >Sign up now</span></p>
                         </div>
                         <div>
                             <p>this page is protected by google recaptcha to ensure you're not a bot. <span className="text-blue-600">Learn more.</span></p>

@@ -1,6 +1,9 @@
+"use client"
+
 import Link from "next/link"
 import Navbar from "../components/Navbar"
 import Footer from "../components/Footer"
+import { useEffect, useState } from "react"
 
 export default function(){
 
@@ -9,6 +12,19 @@ export default function(){
     for(let i=1;i<=15;i++){
         arr.push(i)
     }
+
+    const [movieList, setMovieList] = useState([])
+
+    const getMovie = () =>{
+        fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
+        .then(res => res.json())
+        .then(json => setMovieList(json.results))
+    }
+
+    useEffect(()=>{
+        getMovie()
+    },[])
+    console.log(movieList)
 
 
     return(

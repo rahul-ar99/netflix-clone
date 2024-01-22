@@ -5,8 +5,8 @@ export default function Navbar(){
         <nav className="flex w-full justify-between items-center">
                 <h1 className="">
                     <Link href="/">
-                        <div className="">
-                            <img className="max-w-52" src="/assets/images/logo.png" alt="netflix" />
+                        <div className="pt-4 pl-4">
+                            <img className="max-w-40" src="https://image.tmdb.org/t/p/original/wwemzKWzjKYJFfCeiB57q3r4Bcm.png" alt="netflix" />
                         </div>
                     </Link>
                 </h1>
