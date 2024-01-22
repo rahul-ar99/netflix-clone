@@ -43,21 +43,12 @@ export default function LoginPage(){
     return(
         <>
         <div style={{backgroundImage:'linear-gradient(to bottom,rgba(0, 0, 0, 0.495),rgba(0, 0, 0, 0.313),rgba(0, 0, 0, 0.57)),url(../../assets/images/spotlight_1.jpg)'}} className="flex flex-col w-screen border-b-8 border-neutral-800">
-            {/* <nav className="flex w-full justify-between items-center">
-                <h1 className="">
-                    <Link href="/">
-                        <div className="">
-                            <img className="max-w-52" src="/assets/images/logo.png" alt="netflix" />
-                        </div>
-                    </Link>
-                </h1>
-            </nav> */}
             <Navbar />
             <div className="flex flex-col justify-center items-center w-full py-32">
-                <div className="bg-neutral-950/[0.6] p-14 w-[450px]">
+                <div className="bg-neutral-950/[0.7] p-14 w-[450px]">
                     <h3 className="mb-8 text-3xl">Sign In</h3>
-                    {message && <h5>{message}</h5>}
-                    <form onSubmit={handleSubmit}  className="flex flex-col gap-6">
+                    {message && <h5 className="text-red-600">{message}</h5>}
+                    <form onSubmit={handleSubmit}  className="flex flex-col gap-3">
                         <input 
                             className="h-14 w-full rounded px-3 bg-stone-800/[0.7]" 
                             type="email" 
