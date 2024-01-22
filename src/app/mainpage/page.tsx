@@ -13,7 +13,10 @@ export default function(){
 
     return(
         <div className="">
-            <Navbar />
+            <div className="flex pr-4 justify-center items-center">
+                <Navbar />
+                <Link href="/" className="p-2 h-min rounded-xl bg-red-600">Logout</Link>
+            </div>
             <div className="w-screen p-5 pb-10">
                 <div className="w-[600px]">
                     <h3 className="text-4xl">Netflix Originals</h3>
@@ -36,12 +39,14 @@ export default function(){
                             }
 
                             return (
-                                <div className="flex flex-col items-center">
-                                    <div className="w-[299px] h-[168px]">
-                                        <img src={`/assets/images/movies/movie_images${img_no}.jpg`} alt="asdf" />
+                                <Link href={`/mainpage/${img_no}`}>
+                                    <div className="flex flex-col items-center">
+                                        <div className="w-[299px] h-[168px]">
+                                            <img src={`/assets/images/movies/movie_images${img_no}.jpg`} alt="asdf" />
+                                        </div>
+                                        <p className="mt-2 text-lg">lift 1</p>
                                     </div>
-                                    <p className="mt-2 text-lg">lift 1</p>
-                                </div>
+                                </Link>
                             )
                         }) }
                         

@@ -1,6 +1,7 @@
 "use client";
 
-import Link from "next/link"
+import Link,  from "next/link"
+import { useRouter } from "next/navigation";
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar";
 import React, {useState} from "react"
@@ -11,16 +12,30 @@ import { BASE_URL } from "../axiosConfig";
 
 
 export default function LoginPage(){
-    
+
+    // if user is entered correct details, then redirect to main page
+    const router = useRouter();
+
+    // get data from user 
     const[username, setUsername] = useState("")
     const [password, setPassword] = useState("")
+    const [message, setMessage] = useState("")
+    
 
+
+
+    // submit function
     const handleSubmit = (e) => {
+        e.preventDefault();
+        setMessage("")
         axios
             .post(`${BASE_URL}/auth/token/`,{username,password})
             .then((Response) =>{
                 console.log(Response)
+                router.push("/mainpage");
             }).catch((error)=>{
+                console.log(error.response)
+                setMessage(error.response.data.detail)
 
             })
     }
@@ -41,6 +56,7 @@ export default function LoginPage(){
             <div className="flex flex-col justify-center items-center w-full py-32">
                 <div className="bg-neutral-950/[0.6] p-14 w-[450px]">
                     <h3 className="mb-8 text-3xl">Sign In</h3>
+                    {message && <h5>{message}</h5>}
                     <form onSubmit={handleSubmit}  className="flex flex-col gap-6">
                         <input 
                             className="h-14 w-full rounded px-3 bg-stone-800/[0.7]" 
@@ -56,8 +72,7 @@ export default function LoginPage(){
                             onChange={(e)=>setPassword(e.target.value)}
                             
                             />  
-                            <button to="/auth/create">Sign In</button>
-                        {/* <input className="h-12 w-full rounded bg-red-600 mt-3" type="submit" value="Sign In"/> */}
+                        <input className="h-12 w-full rounded bg-red-600 mt-3" type="submit" value="Sign In"/>
                     </form>
                     <div className="text-slate-600">
 
@@ -83,4 +98,4 @@ export default function LoginPage(){
 
         </>
     )
-}1
+}
