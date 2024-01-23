@@ -1,6 +1,6 @@
 "use client";
 
-import Link,  from "next/link"
+import Link  from "next/link"
 import { useRouter } from "next/navigation";
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar";
@@ -35,9 +35,8 @@ export default function LoginPage(){
                 // router.push("/mainpage");
                 router.push(MOVIE_BASE_URL)
             }).catch((error)=>{
-                console.log(error.response)
-                setMessage(error.response.data.detail)
-
+                console.log(error)
+                setMessage(error.response.data.detail)  
             })
     }
 

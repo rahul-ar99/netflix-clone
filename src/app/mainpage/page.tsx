@@ -8,14 +8,20 @@ import { MOVIE_IMG_URL } from "../axiosConfig"
 
 export default function(){
 
-    var arr = []
-    var img_no = 0
+    var arr = [];
+    let arrStart = 0;
+    let arrEnd = arrStart + 15;
     for(let i=1;i<=15;i++){
         arr.push(i)
     }
 
+
+    // add movie details to movie state
     const [movieList, setMovieList] = useState([])
 
+
+
+    // fetching movie image and name with api
     const getMovie = () =>{
         fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
         .then(res => res.json())
@@ -25,6 +31,9 @@ export default function(){
     useEffect(()=>{
         getMovie()
     },[])
+
+
+    
     
     // console.log(movieList)
 
@@ -43,11 +52,15 @@ export default function(){
             </div>
             <div className="block px-3">
                 { arr.map(()=>{
+                    arr = []
+                    arrStart += 15
+
+
                     return(
                 <>
                 <h5 className="text-2xl mb-3">Comedy Movies</h5>
-                <div className="flex pb-10">
-                    <button>^</button>
+                <div className="flex pb-10 items-center">
+                    <button className="w-[20px] h-full flex items-center justify-center"><img src="/assets/images/left_arrow.png" alt="" className="invert h-min w-min"/></button>
                     <div className="flex gap-2 w-screen overflow-scroll">
 
                         { movieList.map((movie)=>{
@@ -56,8 +69,8 @@ export default function(){
                           
                             return (
                                 <Link href={`/mainpage/${movie.id}`}>
-                                    <div className="flex flex-col items-center">
-                                        <div className="w-[299px] h-[368px] flex items-baseline justify-end">
+                                    <div className="flex flex-col justify-center items-center">
+                                        <div className="w-[299px] h-[449px] ">
                                             <img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="asdf" />
                                         </div>
                                         <p className="mt-2 text-lg">{movie.title}</p>
@@ -67,7 +80,7 @@ export default function(){
                         }) }
                         
                     </div>
-                    <button>^</button>
+                    <button className="w-[20px] h-full flex items-center justify-center"><img src="/assets/images/right_arrow.png" alt="" className="invert h-min w-min"/></button>
                 </div>
                 </>
 
