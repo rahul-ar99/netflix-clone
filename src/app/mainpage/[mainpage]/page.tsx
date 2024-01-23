@@ -59,7 +59,7 @@ export default function SingleItems({
                 <div className="px-20"> 
                     <div className="mt-[250px]">
                         <div className="w-[200px] h-[100px]">
-                            <img src="/assets/images/logo.png" alt="" />
+                            {/* <img src="/assets/images/logo.png" alt="" /> */}
                         </div>
                         <div className="w-[600px]">
                             <h3 className="text-3xl">{movie.title}</h3>
@@ -81,26 +81,26 @@ export default function SingleItems({
 
                 </div>
             </div>
-            <div className="px-20 flex flex-col">
+            <div className="px-20 flex flex-col  my-16">
                 <hr  className="h-1 "/>
                 <div className="w-full py-6 flex justify-center">
 
-                    <p className="text-xl w-[600px] text-center">Adam Sandler stars in this clever coming-of-age comedy with the voices of Bill Burr, Cecily Strong, Jason Alexander and more.</p>
+                    <p className="text-xl w-[600px] text-center">{movie.overview}</p>
                 </div>
                 <hr  className="h-1 "/>
             </div>
             <div className="px-20 flex flex-col">
-                <div>
+                <div className="flex text-xl pb-4 gap-2">
                     <h2>Videos</h2>
                     <span>|</span>
-                    <h4>Leo</h4>
+                    <h4>{movie.title}</h4>
                 </div>
                 <div>
 
                     <div>
                     <img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="asdf" />
                     </div>
-                    <p>Trailer: leo</p>
+                    <p>Trailer: {movie.title}</p>
                 </div>
             </div>
             <div className="px-20 flex flex-col mt-10">
@@ -128,12 +128,12 @@ export default function SingleItems({
                         
                     </div>
                     <div className=" pb-[20px]">
-                        <h6>Subtitles</h6>
+                        <h6 className="text-gray-700 text-xl">Subtitles</h6>
                         <p>English</p>
                     </div>
                 </div>
                 <div>
-                    <h6>Cast</h6>
+                    <h6 className="text-gray-700 text-xl">Cast</h6>
                     <div className="flex flex-wrap">
                         <p className="w-[25%]">Adam Sandler</p>
                         <p className="w-[25%]">Adam Sandler</p>
@@ -152,6 +152,85 @@ export default function SingleItems({
                         <p className="w-[25%]">Adam Sandler</p>
  
                     </div>
+                </div>
+            </div>
+            <div className="px-20 flex flex-col mt-10 w-full">
+                <h2 className="text-3xl font-bold pb-[10px]">More Like This</h2>
+                <div className="flex flex-wrap justify-between gap-y-[20px]">
+                    <div className="min-w-[24%]">
+                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
+                    </div>
+                    <div className="min-w-[24%]">
+                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
+                    </div>
+                    <div className="min-w-[24%]">
+                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
+                    </div>
+                    <div className="min-w-[24%]">
+                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
+                    </div>
+                    <div className="min-w-[24%]">
+                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
+                    </div>
+                    <div className="min-w-[24%]">
+                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
+                    </div>
+                    <div className="min-w-[24%]">
+                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
+                    </div>
+                    <div className="min-w-[24%]">
+                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
+                    </div>
+                    <div className="min-w-[24%]">
+                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
+                    </div>
+                    <div className="min-w-[24%]">
+                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
+                    </div>
+                    <div className="min-w-[24%]">
+                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
+                    </div>
+                    <div className="min-w-[24%]">
+                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
+                    </div>
+                </div>
+            </div>
+            <div  className="px-20 flex flex-col mt-10 w-full">
+                <h2 className="text-3xl font-bold pb-[10px]">Coming Soon</h2>
+                <div className="w-full flex flex-wrap justify-between gap-y-4">
+                    <div className="w-[24%]">
+                        <h6 className="text-lg font-bold">NCIS</h6>
+                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
+                    </div>
+                    <div className="w-[24%]">
+                        <h6 className="text-lg font-bold">NCIS</h6>
+                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
+                    </div>
+                    <div className="w-[24%]">
+                        <h6 className="text-lg font-bold">NCIS</h6>
+                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
+                    </div>
+                    <div className="w-[24%]">
+                        <h6 className="text-lg font-bold">NCIS</h6>
+                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
+                    </div>
+                    <div className="w-[24%]">
+                        <h6 className="text-lg font-bold">NCIS</h6>
+                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
+                    </div>
+                    <div className="w-[24%]">
+                        <h6 className="text-lg font-bold">NCIS</h6>
+                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
+                    </div>
+                    <div className="w-[24%]">
+                        <h6 className="text-lg font-bold">NCIS</h6>
+                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
+                    </div>
+                    <div className="w-[24%]">
+                        <h6 className="text-lg font-bold">NCIS</h6>
+                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
+                    </div>
+                    
                 </div>
             </div>
             <Footer />
