@@ -8,6 +8,9 @@ import { MOVIE_IMG_URL } from "../axiosConfig"
 import React, { Component } from "react";
 import Slider from "react-slick";
 
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+
 
 
 
@@ -18,9 +21,16 @@ import Slider from "react-slick";
 //     return res.json()
 // }
 
+
+
+interface Movie{
+    poster_path:string;
+    title:string;
+}
+
 export default function Mainpage(){
 
-    var arr = [];
+    let arr = [];
     let arrStart = 0;
     let arrEnd = arrStart + 15;
     for(let i=1;i<=15;i++){
@@ -29,49 +39,49 @@ export default function Mainpage(){
 
 
     // add movie details to movie state
-    const [movieList, setMovieList] = useState([])
+    
+    
+    const [movieList, setMovieList] = useState<Movie[]>([])
+    const [isLoading, setIsLoading] = useState(true)
+    
 
+
+    
 
 
     // fetching movie image and name with api
-    const getMovie = () =>{
+    function getMovie(){
 
         // movies
-        // fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
+        fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
 
 
         // comedy movies 
-        fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986&language=en-US&sort_by=release_date.desc&page=1&with_genres=35")
+        // fetch(`https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986&language=en-US&sort_by=release_date.desc&page=1&with_genres=${genreCode}`)
         .then(res => res.json())
-        .then(json => setMovieList(json.results))
+        .then(json => {setMovieList(json.results),setIsLoading(false);})
     }
-    const result1 = fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986&language=en-US&sort_by=release_date.desc&page=1&with_genres=35")
-    const result2 = fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986&language=en-US&sort_by=release_date.desc&page=1&with_genres=28")
-
-    Promise.all([result1,result2])
-        .then(([data1,data2]) => {
-            console.log(data1,data2)
-        })
-        .catch((error)=>{
-            console.error(error)
-        })
 
     useEffect(()=>{
+        // getMovie(35)
         getMovie()
     },[])
 
-    const ImageSettings = {
-        dots: true,
-        infinite: true,
-        speed: 500,
+    const settings = {
+        className: "center",
+        centerMode: false,
+        infinite: false,
+        centerPadding: "0px",
         slidesToShow: 1,
-        slidesToScroll: 1
-      };
+        speed: 1000,
+        rows: 1,
+        slidesPerRow: 6
+        };
 
 
     
     
-    // console.log(movieList)
+    console.log(movieList)
 
 
     return(
@@ -86,57 +96,58 @@ export default function Mainpage(){
                     <p className="text-xl">Netflix is the home of amazing original ptogamming that you can't find anywhere else. Movies, TV shows, specials and more, it's all tailored specifically to you.</p>
                 </div>
             </div>
-            <div className="block px-3 py-4">
+            <div className="block px-3 py-4 w-full">
                 { arr.map(()=>{
-                    arr = []
+                    // arr = []
                     arrStart += 15
 
 
                     return(
                 <>
                 <h5 className="text-2xl mb-3">Comedy Movies</h5>
-                <Slider {...ImageSettings}>
-                <div>
-                    <h3>1</h3>
-                </div>
-                <div>
-                    <h3>2</h3>
-                </div>
-                <div>
-                    <h3>3</h3>
-                </div>
-                <div>
-                    <h3>4</h3>
-                </div>
-                <div>
-                    <h3>5</h3>
-                </div>
-                <div>
-                    <h3>6</h3>
-                </div>
-                </Slider>
-                <div className="flex pb-10 items-center">
-                    <button className="w-[20px] h-full flex items-center justify-center"><img src="/assets/images/left_arrow.png" alt="" className="invert h-min w-min"/></button>
-                    <div className="flex gap-2 w-screen overflow-scroll">
-                        <Slider >
+             
+                <div className="flex pb-10 items-center px-10">
+                    <button className="w-[20px] h-full flex "><img src="/assets/images/left_arrow.png" alt="" className="invert h-min w-min"/></button>
+                    <div className="flex gap-2 w-full">
+                        <ul className="flex w-full gap-1" >
+                            {isLoading ? (<p>Loading Movies...</p>):
+                                (<Slider {...settings} className="w-full flex">
+                                    { movieList.map((movie,index)=>{
+                                        
+                                        // let img_path = MOVIE_BASE_URL + movie.poster_path
+                                        // console.log(img_path)
+                                        if(movie.poster_path!=null && movie.backdrop_path!=null){
+                                            return (
+                                                <li key={index} className="w-min-[299px] h-[449px]">
+                
+                                                <div>
+                                                <Link href={`/mainpage/${movie.id}`} key={index}>
+                                                <div className="flex flex-col justify-center items-center " >
+                                                <div className="w-[259px] h-auto ">  
+                                                <img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="asdf" className="" />
+                                                </div>
+                                                <p className="mt-2 text-lg">{movie.title}</p>
+                                                </div>
+                                                </Link>
+                                            </div>
+                                                </li>
+                                            )
 
-                        { movieList.map((movie,index)=>{
-                            // let img_path = MOVIE_BASE_URL + movie.poster_path
-                            // console.log(img_path)
-                            
-                            return (
-                                <Link href={`/mainpage/${movie.id}`} key={index}>
-                                    <div className="flex flex-col justify-center items-center w-max-[200px] h-max-[300px]" >
-                                        <div className="w-[299px] h-[449px] ">
-                                            <img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="asdf" className="w-[100px]" />
-                                        </div>
-                                        <p className="mt-2 text-lg">{movie.title}</p>
-                                    </div>
-                                </Link>
-                            )
-                        }) }
-                        </Slider>
-                        
+                                        }
+                                        
+                                    }) }
+                                </Slider>)
+                            }
+                        </ul>
+                    {/* <Link href={`/mainpage/${movie.id}`} key={index} className="w-[200px]">
+                        <div className=" w-screen" >
+                        <div className="w-[30px]">
+                        <img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="asdf" className="" />
+                        </div>
+                        <p>sadflkjf</p>
+                        <p className="mt-2 text-lg">{movie.title}</p>
+                        </div>
+                    </Link> */}
                     </div>
                     <button className="w-[20px] h-full flex items-center justify-center"><img src="/assets/images/right_arrow.png" alt="" className="invert h-min w-min"/></button>
                 </div>

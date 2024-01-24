@@ -32,8 +32,8 @@ export default function LoginPage(){
             .post(`${BASE_URL}/auth/token/`,{username,password})
             .then((Response) =>{
                 console.log(Response)
-                // router.push("/mainpage");
-                router.push(MOVIE_BASE_URL)
+                router.push("/mainpage");
+                // router.push(MOVIE_BASE_URL)
             }).catch((error)=>{
                 console.log(error)
                 // setMessage(error.response.data.detail) 
