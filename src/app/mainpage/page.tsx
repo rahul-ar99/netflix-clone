@@ -6,8 +6,19 @@ import Footer from "../components/Footer"
 import { useEffect, useState } from "react"
 import { MOVIE_IMG_URL } from "../axiosConfig"
 
-export default function(){
 
+
+
+// async function getMovie (){
+//     const res = await fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
+//     // .then(res => res.json())
+//     // .then(json => setMovieList(json.results))
+//     return res.json()
+// }
+
+export default function Mainpage(){
+
+    console.log("sdlfkjlkjl")
     var arr = [];
     let arrStart = 0;
     let arrEnd = arrStart + 15;
@@ -23,13 +34,21 @@ export default function(){
 
     // fetching movie image and name with api
     const getMovie = () =>{
-        fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
+        // fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
+        // comedy movies 
+        fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986&language=en-US&sort_by=release_date.desc&page=1&with_genres=28")
         .then(res => res.json())
         .then(json => setMovieList(json.results))
     }
 
     useEffect(()=>{
         getMovie()
+    // var movieList = {}
+    // const movieList = await getMovie()
+    // console.log(movieList)
+    // console.log("asdfds")
+
+    // setMovieList(mov)
     },[])
 
 

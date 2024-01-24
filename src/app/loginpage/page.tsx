@@ -36,7 +36,8 @@ export default function LoginPage(){
                 router.push(MOVIE_BASE_URL)
             }).catch((error)=>{
                 console.log(error)
-                setMessage(error.response.data.detail)  
+                // setMessage(error.response.data.detail) 
+                setMessage(error.message) 
             })
     }
 
