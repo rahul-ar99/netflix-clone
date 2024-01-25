@@ -13,15 +13,16 @@ export default function SingleItems({
         const [movie, setMovie] = useState([])
         const [imageList, setImageList] = useState([])
 
-
         // let movieF={}
         const getMovie = async () =>{
             try {
+
                 const res = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`)
                 const movieData = await res.json();
                 setMovie(movieData)
                 // console.log(movieData)
                 // movieF.push(movieData)
+
                 
                 const res1 = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/images?api_key=c335ae1ffb9a62f766ee249471af6986`)
                 const imageData = await res1.json();
@@ -37,11 +38,14 @@ export default function SingleItems({
                 // })
                 // .then(json => setMovie(json.results))
             }
-            console.log(movie)
+            // console.log(movie)
         useEffect(()=>{
             getMovie()
         },[])
-        let a = imageList
+        // imageList.map((i)=>{
+        //     console.log(i)
+        // })
+        // let a = imageList
         
         // console.log(a.map((i)=>console.log(i)))
 
@@ -51,7 +55,7 @@ export default function SingleItems({
             {/* {movie.map((i)=>{
                  return <h1>{i.title}</h1>
              })} */}
-            <div style={{backgroundImage:`linear-gradient(to right,rgba(0, 0, 0, 1),rgba(0, 0, 0, .7),rgba(0, 0, 0, 0)),url("https://image.tmdb.org/t/p/w500/${movie.backdrop_path}")`,width:"100%"}} className="w-screen h-screen bg-cover bg-no-repeat z-[-1]">
+            <div style={{backgroundImage:`linear-gradient(to right,rgba(0, 0, 0, 1),rgba(0, 0, 0, .7),rgba(0, 0, 0, 0)),url("https://image.tmdb.org/t/p/w500/${movie.backdrop_path}")`,width:"100%"}} className="w-[1778px] h-[1000px] bg-cover bg-no-repeat z-[-1]">
                 <div className="flex pr-6 bg-black items-center">
                     <Navbar />
                     <button className="px-3 py-2 h-min bg-red-600 font-bold rounded">Logout</button>

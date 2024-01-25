@@ -68,14 +68,15 @@ export default function Mainpage(){
     },[])
 
     const settings = {
-        className: "center",
+        // className: "center",
         centerMode: false,
         infinite: false,
         centerPadding: "0px",
-        slidesToShow: 1,
+        slidesToShow: 6,
         speed: 1000,
         rows: 1,
-        slidesPerRow: 6
+        // slidesPerRow: 6,
+        slidesToScroll:5
         };
 
 
@@ -116,26 +117,24 @@ export default function Mainpage(){
                                         
                                         // let img_path = MOVIE_BASE_URL + movie.poster_path
                                         // console.log(img_path)
-                                        if(movie.poster_path!=null && movie.backdrop_path!=null){
+                                        if(movie.poster_path!=null && movie.backdrop_path != null){
                                             return (
                                                 <li key={index} className="w-min-[299px] h-[449px]">
                 
                                                 <div>
-                                                <Link href={`/mainpage/${movie.id}`} key={index}>
-                                                <div className="flex flex-col justify-center items-center " >
-                                                <div className="w-[259px] h-auto ">  
-                                                <img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="asdf" className="" />
+                                                    <Link href={`/mainpage/${movie.id}`} key={index}>
+                                                    <div className="flex flex-col justify-center items-center " >
+                                                    <div className="w-[259px] h-auto ">  
+                                                    <img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="asdf" className="" />
+                                                    </div>
+                                                    <p className="mt-2 text-lg">{movie.title}</p>
+                                                    </div>
+                                                    </Link>
                                                 </div>
-                                                <p className="mt-2 text-lg">{movie.title}</p>
-                                                </div>
-                                                </Link>
-                                            </div>
                                                 </li>
                                             )
-
                                         }
-                                        
-                                    }) }
+                                    })}
                                 </Slider>)
                             }
                         </ul>
