@@ -66,6 +66,7 @@ export default function Mainpage(){
         // getMovie(35)
         getMovie()
     },[])
+    
 
     const settings = {
         // className: "center",
