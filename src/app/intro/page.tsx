@@ -58,7 +58,7 @@ export default function Intro() {
                 </div>
 
                 {/* second */}
-                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800">
+                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800 pb-7">
                     <div className="relative">
                         <img src="assets/images/mobile.jpg" alt=""  className="z-0"/>
                         <div className="flex border-2 rounded-xl p-2 absolute bottom-5 bg-black left-36 items-center">

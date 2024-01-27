@@ -101,7 +101,7 @@ export default function Mainpage(){
             <div className="block px-3 py-4 w-full">
                 { arr.map(()=>{
                     // arr = []
-                    arrStart += 15
+                    // arrStart += 15
 
 
                     return(
