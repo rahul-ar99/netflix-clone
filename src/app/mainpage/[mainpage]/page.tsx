@@ -42,6 +42,7 @@ export default function SingleItems({
         useEffect(()=>{
             getMovie()
         },[])
+        // console.log(getMovie)
         // imageList.map((i)=>{
         //     console.log(i)
         // })

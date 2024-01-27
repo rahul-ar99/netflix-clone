@@ -50,10 +50,10 @@ export default function Mainpage(){
 
 
     // fetching movie image and name with api
-    function getMovie(){
+    async function getMovie(){
 
         // movies
-        fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
+        await fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
 
 
         // comedy movies 
@@ -83,7 +83,7 @@ export default function Mainpage(){
 
     
     
-    console.log(movieList)
+    console.log(movieList[2].genre_ids[0])
 
 
     return(
@@ -116,7 +116,7 @@ export default function Mainpage(){
                                 (<Slider {...settings} className="w-full flex">
                                     { movieList.map((movie,index)=>{
                                         
-                                        // let img_path = MOVIE_BASE_URL + movie.poster_path
+                                        // let img_path = MOVIE_IMG_URL + movie.poster_path
                                         // console.log(img_path)
                                         if(movie.poster_path!=null && movie.backdrop_path != null){
                                             return (
