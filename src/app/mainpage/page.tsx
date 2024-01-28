@@ -83,7 +83,7 @@ export default function Mainpage(){
 
     
     
-    console.log(movieList[2].genre_ids[0])
+    // console.log(movieList[2].genre_ids[0])
 
 
     return(
