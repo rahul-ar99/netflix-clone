@@ -56,7 +56,7 @@ export default function SingleItems({
             {/* {movie.map((i)=>{
                  return <h1>{i.title}</h1>
              })} */}
-            <div style={{backgroundImage:`linear-gradient(to right,rgba(0, 0, 0, 1),rgba(0, 0, 0, .7),rgba(0, 0, 0, 0)),url("https://image.tmdb.org/t/p/w500/${movie.backdrop_path}")`,width:"100%"}} className="w-[1778px] h-[1000px] bg-cover bg-no-repeat z-[-1]">
+            <div style={{backgroundImage:`linear-gradient(to right,rgba(0, 0, 0, 1),rgba(0, 0, 0, .7),rgba(0, 0, 0, 0)),url("https://image.tmdb.org/t/p/w500/${movie.backdrop_path}")`,width:"100%"}} className="w-screen h-screen bg-cover bg-no-repeat z-[-1]">
                 <div className="flex pr-6 bg-black items-center">
                     <Navbar />
                     <button className="px-3 py-2 h-min bg-red-600 font-bold rounded">Logout</button>
@@ -76,7 +76,7 @@ export default function SingleItems({
                                 <p>{movie.runtime}m</p>
                                 <span>|</span>
                                 {/* <p>{movie.genres[0].name}</p> */}
-                            </div>
+                            </div>  
                             <div className="text-lg ">
                                 <p className="text-justify py-4">{movie.overview}</p>
                                 <p><span className=" text-gray-500 ">Starring: </span> adam sandler, Bill Burr, Cecily Strong</p>
