@@ -5,6 +5,8 @@ import Footer from "@/app/components/Footer"
 import { MOVIE_IMG_URL } from "@/app/axiosConfig"
 import { useEffect, useState } from "react"
 
+
+
 export default function SingleItems({
     params}:{
         params:{mainpage:string}
@@ -14,7 +16,6 @@ export default function SingleItems({
         const [imageList, setImageList] = useState([])
         const [similarmovie, setSimilarmovie] = useState([])
 
-        // let movieF={}
         const getMovie = async () =>{
             try {
 
@@ -22,7 +23,6 @@ export default function SingleItems({
                 const movieData = await res.json();
                 setMovie(movieData)
                 console.log(movieData)
-                // movieF.push(movieData)
 
 
                 const res2 = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`)
@@ -36,15 +36,7 @@ export default function SingleItems({
             } catch (error){
                 console.error("error asdf",error)
             }
-            // fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`)
-            // .then((res) => res.json())
-            // .then((movie) => {
-                //     setMovie(movie)
-                
-                // })
-                // .then(json => setMovie(json.results))
             }
-            // console.log(movie)
         useEffect(()=>{
             getMovie()
         },[])

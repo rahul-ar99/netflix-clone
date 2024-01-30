@@ -28,7 +28,7 @@ interface Movie{
     title:string;
 }
 
-export default function Mainpage(){
+export default function ComponentMain(prop){
 
     let arr = [];
     let arrStart = 0;
