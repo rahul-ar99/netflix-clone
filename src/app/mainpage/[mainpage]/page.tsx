@@ -162,9 +162,9 @@ export default function SingleItems({
             <div className="px-20 flex flex-col mt-10 w-full">
                 <h2 className="text-3xl font-bold pb-[10px]">More Like This</h2>
                 <div className="flex flex-wrap justify-between gap-y-[20px]">
-                    {similarmovie.map(()=>{
+                    {/* {similarmovie.map(()=>{
                         return <h1>hii</h1>
-                    })}
+                    })} */}
                     <div className="min-w-[24%]">
                         <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
                     </div>
