@@ -5,9 +5,11 @@ import { useRouter } from "next/navigation";
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar";
 import React, {useRef, useState} from "react"
-import { getAuth,signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import axios from "axios"
+import { BASE_URL } from "../axiosConfig";
+import { MOVIE_BASE_URL } from "../axiosConfig";
 
 
 
@@ -18,25 +20,27 @@ export default function LoginPage(){
     const router = useRouter();
 
 
-
+    //stype method 
 
     const [message, setMessage] = useState("")
     
+
+
 
 
     const emailRef = useRef();
     const passwordRef = useRef();
 
 
-    const login = (e) =>{
+    const signin = (e) =>{
         e.preventDefault();
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
 
-        signInWithEmailAndPassword(auth,email,password)
+        createUserWithEmailAndPassword(auth,email,password)
             .then((userCredential)=>{
                 const user = userCredential.user;
-                alert('signup Successful')
+                alert('login Successful')
                 router.push("/mainpage");
 
             })
@@ -54,9 +58,9 @@ export default function LoginPage(){
             <Navbar />
             <div className="flex flex-col justify-center items-center w-full py-32">
                 <div className="bg-neutral-950/[0.7] p-14 w-[450px]">
-                    <h3 className="mb-8 text-3xl">Log In</h3>
+                    <h3 className="mb-8 text-3xl">Sign In</h3>
                     {message && <h5 className="text-red-600">{message}</h5>}
-                    <form onSubmit={login}  className="flex flex-col gap-3">
+                    <form onSubmit={signin}  className="flex flex-col gap-3">
                         <input 
                             className="h-14 w-full rounded px-3 bg-stone-800/[0.7]" 
                             type="email" 
@@ -73,7 +77,7 @@ export default function LoginPage(){
                             ref={passwordRef}
                             
                             />  
-                        <input className="h-12 w-full rounded bg-red-600 mt-3" type="submit" value="Log In"/>
+                        <input className="h-12 w-full rounded bg-red-600 mt-3" type="submit" value="Sign In"/>
                     </form>
                     <div className="text-slate-600">
 
@@ -85,7 +89,8 @@ export default function LoginPage(){
                             <p>need help?</p>
                         </div>
                         <div className="my-4">
-                        <p>New to Netflix?<Link href={'/signuppage'} className="text-white" >Sign up now</Link></p>
+                            <p>Already a member? <Link href={"/loginpage"} className="text-white cursor-pointer" >Log in now</Link></p>
+
                         </div>
                         <div>
                             <p>this page is protected by google recaptcha to ensure you're not a bot. <span className="text-blue-600">Learn more.</span></p>

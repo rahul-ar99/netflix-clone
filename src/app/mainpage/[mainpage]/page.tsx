@@ -12,6 +12,7 @@ export default function SingleItems({
 
         const [movie, setMovie] = useState([])
         const [imageList, setImageList] = useState([])
+        const [similarmovie, setSimilarmovie] = useState([])
 
         // let movieF={}
         const getMovie = async () =>{
@@ -20,11 +21,16 @@ export default function SingleItems({
                 const res = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`)
                 const movieData = await res.json();
                 setMovie(movieData)
-                // console.log(movieData)
+                console.log(movieData)
                 // movieF.push(movieData)
 
+
+                const res2 = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`)
+                const similarmovieData = await res2.json();
+                setSimilarmovie(similarmovieData)
+
                 
-                const res1 = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/images?api_key=c335ae1ffb9a62f766ee249471af6986`)
+                const res1 = await fetch(`https://api.themoviedb.org/3/movie/787699/similar?api_key=c335ae1ffb9a62f766ee249471af6986`)
                 const imageData = await res1.json();
                 setImageList(imageData)
             } catch (error){
@@ -42,13 +48,7 @@ export default function SingleItems({
         useEffect(()=>{
             getMovie()
         },[])
-        // console.log(getMovie)
-        // imageList.map((i)=>{
-        //     console.log(i)
-        // })
-        // let a = imageList
-        
-        // console.log(a.map((i)=>console.log(i)))
+
 
         
         return (
@@ -56,8 +56,8 @@ export default function SingleItems({
             {/* {movie.map((i)=>{
                  return <h1>{i.title}</h1>
              })} */}
-            <div style={{backgroundImage:`linear-gradient(to right,rgba(0, 0, 0, 1),rgba(0, 0, 0, .7),rgba(0, 0, 0, 0)),url("https://image.tmdb.org/t/p/w500/${movie.backdrop_path}")`,width:"100%"}} className="w-screen h-screen bg-cover bg-no-repeat z-[-1]">
-                <div className="flex pr-6 bg-black items-center">
+            <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .95) 40%,rgba(0, 0, 0, .8) 50%,transparent),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`,width:"100%"}} className="w-screen h-screen bg-cover bg-no-repeat z-[-1]">
+                <div className="flex pr-6 bg-black items-center">   
                     <Navbar />
                     <button className="px-3 py-2 h-min bg-red-600 font-bold rounded">Logout</button>
                 </div>
@@ -162,6 +162,9 @@ export default function SingleItems({
             <div className="px-20 flex flex-col mt-10 w-full">
                 <h2 className="text-3xl font-bold pb-[10px]">More Like This</h2>
                 <div className="flex flex-wrap justify-between gap-y-[20px]">
+                    {similarmovie.map(()=>{
+                        return <h1>hii</h1>
+                    })}
                     <div className="min-w-[24%]">
                         <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
                     </div>
