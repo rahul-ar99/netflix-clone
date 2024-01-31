@@ -30,6 +30,7 @@ export default function LoginPage(){
 
     const login = (e) =>{
         e.preventDefault();
+        setMessage("")
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
 
@@ -43,7 +44,8 @@ export default function LoginPage(){
             .catch((error)=>{
                 const errorCode = error.code;
                 const errorMessage = error.message;
-                alert (errorMessage)
+                setMessage("Username or Password is wrong")
+                // alert (errorMessage)
             })
 
     }

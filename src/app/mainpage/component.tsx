@@ -28,7 +28,7 @@ interface Movie{
     title:string;
 }
 
-export default function ComponentMain(prop){
+export default function ComponentMain({genreId}){
 
     let arr = [];
     let arrStart = 0;
@@ -53,11 +53,11 @@ export default function ComponentMain(prop){
     async function getMovie(){
 
         // movies
-        await fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
+        // await fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
 
 
         // comedy movies 
-        // fetch(`https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986&language=en-US&sort_by=release_date.desc&page=1&with_genres=${genreCode}`)
+        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986&language=en-US&sort_by=release_date.desc&page=1&with_genres=${genreId}`)
         .then(res => res.json())
         .then(json => {setMovieList(json.results),setIsLoading(false);})
     }
@@ -87,25 +87,7 @@ export default function ComponentMain(prop){
 
 
     return(
-        <div className="">
-            <div className="flex pr-4 justify-center items-center">
-                <Navbar />
-                <Link href="/" className="p-2 h-min rounded-xl bg-red-600">Logout</Link>
-            </div>
-            <div className="w-screen p-5 pb-10">
-                <div className="w-[600px]">
-                    <h3 className="text-4xl">Netflix Originals</h3>
-                    <p className="text-xl">Netflix is the home of amazing original ptogamming that you can't find anywhere else. Movies, TV shows, specials and more, it's all tailored specifically to you.</p>
-                </div>
-            </div>
-            <div className="block px-3 py-4 w-full">
-                {/* { arr.map(()=>{
-                    // arr = []
-                    // arrStart += 15
-
-
-                    return(
-                <> */}
+        <>
                 <h5 className="text-2xl mb-3">Comedy Movies</h5>
              
                 <div className="flex pb-10 items-center px-10">
@@ -151,13 +133,6 @@ export default function ComponentMain(prop){
                     </div>
                     <button className="w-[20px] h-full flex items-center justify-center"><img src="/assets/images/right_arrow.png" alt="" className="invert h-min w-min"/></button>
                 </div>
-                {/* </>s */}
-
-                    {/* )
-                })} */}
-            </div>
-            <Footer /> 
-
-        </div>
+            </>
     )
 }
