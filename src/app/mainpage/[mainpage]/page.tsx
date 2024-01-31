@@ -33,10 +33,12 @@ export default function SingleItems({
                 const res1 = await fetch(`https://api.themoviedb.org/3/movie/787699/similar?api_key=c335ae1ffb9a62f766ee249471af6986`)
                 const imageData = await res1.json();
                 setImageList(imageData)
+
+                
             } catch (error){
                 console.error("error asdf",error)
             }
-            }
+        }
         useEffect(()=>{
             getMovie()
         },[])
