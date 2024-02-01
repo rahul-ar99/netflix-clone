@@ -84,11 +84,9 @@ export default function ComponentMain({genreId,genreName}){
                             {isLoading ? (<p>Loading Movies...</p>):
                                 (<Slider {...settings} className="w-full flex">
                                     { movieList.map((movie,index)=>{
-
                                         if(movie.poster_path!=null){
                                             return (
                                                 <li key={index} className="w-min-[299px] h-[449px]">
-                
                                                 <div>
                                                     <Link href={`/mainpage/${movie.id}`} key={index}>
                                                     <div className="flex flex-col justify-center items-center " >
@@ -106,7 +104,6 @@ export default function ComponentMain({genreId,genreName}){
                                 </Slider>)
                             }
                         </ul>
-                  
                     </div>
                     <button className="w-[20px] h-full flex items-center justify-center"><img src="/assets/images/right_arrow.png" alt="" className="invert h-min w-min"/></button>
                 </div>
