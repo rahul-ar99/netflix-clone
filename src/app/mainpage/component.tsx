@@ -21,7 +21,7 @@ interface Movie{
     title:string;
 }
 
-export default function ComponentMain({genreId}){
+export default function ComponentMain({genreId,genreName}){
 
     let arr = [];
     let arrStart = 0;
@@ -32,9 +32,10 @@ export default function ComponentMain({genreId}){
 
 
     // add movie details to movie state
-    
-    
     const [movieList, setMovieList] = useState<Movie[]>([])
+
+
+    // api is full load then the site will show
     const [isLoading, setIsLoading] = useState(true)
     
 
@@ -49,14 +50,12 @@ export default function ComponentMain({genreId}){
         // await fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
 
 
-        // comedy movies 
         fetch(`https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986&language=en-US&sort_by=release_date.desc&page=1&with_genres=${genreId}`)
         .then(res => res.json())
         .then(json => {setMovieList(json.results),setIsLoading(false);})
     }
 
     useEffect(()=>{
-        // getMovie(35)
         getMovie()
     },[])
     
@@ -74,14 +73,9 @@ export default function ComponentMain({genreId}){
         };
 
 
-    
-    
-    // console.log(movieList[2].genre_ids[0])
-
-
     return(
         <>
-                <h5 className="text-2xl mb-3">Comedy Movies</h5>
+                <h5 className="text-2xl mb-3">{genreName}</h5>
              
                 <div className="flex pb-10 items-center px-10">
                     <button className="w-[20px] h-full flex "><img src="/assets/images/left_arrow.png" alt="" className="invert h-min w-min"/></button>
@@ -91,7 +85,7 @@ export default function ComponentMain({genreId}){
                                 (<Slider {...settings} className="w-full flex">
                                     { movieList.map((movie,index)=>{
 
-                                        if(movie.poster_path!=null && movie.backdrop_path != null){
+                                        if(movie.poster_path!=null){
                                             return (
                                                 <li key={index} className="w-min-[299px] h-[449px]">
                 
@@ -99,7 +93,7 @@ export default function ComponentMain({genreId}){
                                                     <Link href={`/mainpage/${movie.id}`} key={index}>
                                                     <div className="flex flex-col justify-center items-center " >
                                                     <div className="w-[259px] h-auto ">  
-                                                    <img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="asdf" className="" />
+                                                    <img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="Movie image" className="" />
                                                     </div>
                                                     <p className="mt-2 text-lg">{movie.title}</p>
                                                     </div>
@@ -112,15 +106,7 @@ export default function ComponentMain({genreId}){
                                 </Slider>)
                             }
                         </ul>
-                    {/* <Link href={`/mainpage/${movie.id}`} key={index} className="w-[200px]">
-                        <div className=" w-screen" >
-                        <div className="w-[30px]">
-                        <img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="asdf" className="" />
-                        </div>
-                        <p>sadflkjf</p>
-                        <p className="mt-2 text-lg">{movie.title}</p>
-                        </div>
-                    </Link> */}
+                  
                     </div>
                     <button className="w-[20px] h-full flex items-center justify-center"><img src="/assets/images/right_arrow.png" alt="" className="invert h-min w-min"/></button>
                 </div>

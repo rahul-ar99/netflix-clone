@@ -1,6 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react";
+import ComponentMain from "./component";
+import Link from "next/link";
+import Navbar from "../components/Navbar"
+import Footer from "../components/Footer"
+
+
 
 // import React, { useEffect, useState } from "react"
 
@@ -67,7 +73,8 @@ interface Details{
 export default function MainPage(){
 
 
-    const [genre,setGenre] = useState<Details | null>(null)
+    const [genre,setGenre] = useState<Details | null>([])
+    const [isloading, setIsloading] = useState(true)
     
     const genreDetail = async () =>{
         try{
@@ -76,7 +83,10 @@ export default function MainPage(){
 
             if(json){
                 setGenre(json)
-                console.log(json)
+                if(genre){
+                    setIsloading(false)
+                }
+                // console.log(json)
             } 
         }catch (error){
             console.log(error)
@@ -84,21 +94,49 @@ export default function MainPage(){
     }
     useEffect(()=>{
         genreDetail()
-        console.log(genre)
     },[])
-
+    if(isloading===false){
+        // console.log(genre)
+    }
+    console.log(genre)
     if(!genre){
         return <p>Loading...</p>
     }
     else{
         return (
-            // console.log(genre)
             <>
-            {(for i in genre.genres){
-                return <h1>{i}</h1>
-            }}
-            <h1>{genre.genres[2]}</h1>
-            </>
+            <div className="flex pr-4 justify-center items-center">
+                <Navbar />
+                <Link href="/" className="p-2 h-min rounded-xl bg-red-600">Logout</Link>
+            </div>
+            <div className="w-screen p-5 pb-10">
+                <div className="w-[600px]">
+                    <h3 className="text-4xl">Netflix Originals</h3>
+                    <p className="text-xl">Netflix is the home of amazing original ptogamming that you can't find anywhere else. Movies, TV shows, specials and more, it's all tailored specifically to you.</p>
+                </div>
+            </div>
+            {/* {console.log(genre)} */}
+            { isloading?<p>Loading......</p>:
+
+                [...Array(15)].map((i,j)=>{
+                    return(<>
+                                <ComponentMain genreId={genre.genres[j].id} genreName={genre.genres[j].name}/>                        
+                            </>)
+                    
+                    }
+                    
+                    )
+                }
+        
+            <Footer />
+        </>
+            // console.log(genre)
+            // <>
+            // {(for i in genre.genres){
+            //     return <h1>{i}</h1>
+            // }}
+            // <h1>{genre.genres[2]}</h1>
+            // </>
         )
     }
 }
