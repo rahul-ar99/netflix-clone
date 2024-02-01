@@ -1,4 +1,6 @@
-// "use client"
+"use client"
+
+import { useEffect, useState } from "react";
 
 // import React, { useEffect, useState } from "react"
 
@@ -47,32 +49,56 @@
 // }
 
 
-
-import React from 'react';
-
-export default function Home({ genres }) {
-  return (
-    <div>
-      <h1>Movie Genres</h1>
-      <ul>
-        {genres.map(genre => (
-          <li key={genre.id}>{genre.name}</li>
-        ))}
-      </ul>
-    </div>
-  );
+interface Details{
+    adult:boolean;
+    genres: {name:string}[];
+    released_date?:string;
+    logo_path?:string;
+    original_title:string;
+    id:number;
+    backdrop_path:string;
+    title:string;
+    name:string;
+    runtime:number;
+    production_companies:{logo_path:string}[];
 }
 
-export async function getStaticProps() {
-  // Fetching data from the API
-  const apiKey = 'c335ae1ffb9a62f766ee249471af6986';
-  const response = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=${apiKey}`);
-  const data = await response.json();
 
-  // Pass data to the page via props
-  return {
-    props: {
-      genres: data.genres,
-    },
-  };
+export default function MainPage(){
+
+
+    const [genre,setGenre] = useState<Details | null>(null)
+    
+    const genreDetail = async () =>{
+        try{
+            const response = await fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=c335ae1ffb9a62f766ee249471af6986");
+            const json = await response.json();
+
+            if(json){
+                setGenre(json)
+                console.log(json)
+            } 
+        }catch (error){
+            console.log(error)
+        }
+    }
+    useEffect(()=>{
+        genreDetail()
+        console.log(genre)
+    },[])
+
+    if(!genre){
+        return <p>Loading...</p>
+    }
+    else{
+        return (
+            // console.log(genre)
+            <>
+            {(for i in genre.genres){
+                return <h1>{i}</h1>
+            }}
+            <h1>{genre.genres[2]}</h1>
+            </>
+        )
+    }
 }

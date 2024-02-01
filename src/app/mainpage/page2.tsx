@@ -71,7 +71,7 @@ export default function Mainpage(){
         const res3 = await fetch(`https://api.themoviedb.org/3/genre/movie/list?api_key=c335ae1ffb9a62f766ee249471af6986`)
         const genre = await res3.json();
         setGenrelist(genre)
-        console.log(genrelist.id)
+        console.log(genrelist.genres[0].id)
         // genrelist.map((items)=>{
         //     console.log("dl;kjoisdf")
         // })
@@ -166,7 +166,7 @@ export default function Mainpage(){
 
                     {/* )
                 })} */}
-                {
+                {/* {
                     isLoading ? (<p>Loading Movies...</p>):
                     (<>
                 {
@@ -175,7 +175,7 @@ export default function Mainpage(){
                     })
                 }
                 </>)
-            }
+            } */}
 
                 {/* <ComponentMain genreId={35} /> */}
             </div>
