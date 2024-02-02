@@ -69,6 +69,10 @@ interface Details{
     production_companies:{logo_path:string}[];
 }
 
+interface Details{
+    id:number;
+}
+
 
 export default function MainPage(){
 
@@ -118,7 +122,7 @@ export default function MainPage(){
             {/* {console.log(genre)} */}
             { isloading?<p>Loading......</p>:
 
-                [...Array(15)].map((i,j)=>{
+                [...Array(19)].map((i,j)=>{
                     return(<>
                                 <ComponentMain genreId={genre.genres[j].id} genreName={genre.genres[j].name}/>                        
                             </>)

@@ -5,51 +5,94 @@ import Footer from "@/app/components/Footer"
 import { MOVIE_IMG_URL } from "@/app/axiosConfig"
 import { useEffect, useState } from "react"
 
+interface Movie{
+    title:string;
+    release_date:Date;
+    runtime:number;
+    overview:string;
+    poster_path:string;
 
+}
 
 export default function SingleItems({
     params}:{
         params:{mainpage:string}
     }){
 
-        const [movie, setMovie] = useState([])
+        const [movie, setMovie] = useState<Movie |null>()
         const [imageList, setImageList] = useState([])
         const [similarmovie, setSimilarmovie] = useState([])
+
+
+        const [isLoading, setIsLoading] = useState(true)
+        const [imageLoad, setimageLoad] = useState(true)
 
         const getMovie = async () =>{
             try {
 
+                // const res = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`)
                 const res = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`)
                 const movieData = await res.json();
-                setMovie(movieData)
-                console.log(movieData)
+                if(movieData){
+                    setMovie(movieData)
+                }
+                // console.log(movieData)
 
 
                 const res2 = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`)
                 const similarmovieData = await res2.json();
-                setSimilarmovie(similarmovieData)
+                if(similarmovieData){
+                    setSimilarmovie(similarmovieData)
+                }
+                // console.log(similarmovie)
 
                 
-                const res1 = await fetch(`https://api.themoviedb.org/3/movie/787699/similar?api_key=c335ae1ffb9a62f766ee249471af6986`)
+                const res1 = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/images?api_key=c335ae1ffb9a62f766ee249471af6986`)
                 const imageData = await res1.json();
-                setImageList(imageData)
+                if(imageData){
+                    setImageList(imageData)
+                    // console.log(imageList)
+                }
+
+                setIsLoading(false)
 
                 
             } catch (error){
                 console.error("error asdf",error)
             }
+
         }
+
+        const getImage = async () =>{
+            try {
+                const res1 = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/images?api_key=c335ae1ffb9a62f766ee249471af6986`)
+                const imageData = await res1.json();
+                if(imageData){
+                    setImageList(imageData)
+                }
+                console.log(imageList)
+                setimageLoad(false)
+            }catch(error){
+                
+            };
+            
+        }
+
+
         useEffect(()=>{
             getMovie()
+            getImage()
         },[])
+
 
 
         
         return (
             <>
-            {/* {movie.map((i)=>{
-                 return <h1>{i.title}</h1>
-             })} */}
+            {isLoading?<p>loading.....</p>:
+            imageLoad?<p>other loading</p>:
+            <div>
+
             <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .95) 40%,rgba(0, 0, 0, .8) 50%,transparent),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`,width:"100%"}} className="w-screen h-screen bg-cover bg-no-repeat z-[-1]">
                 <div className="flex pr-6 bg-black items-center">   
                     <Navbar />
@@ -63,7 +106,7 @@ export default function SingleItems({
                         <div className="w-[600px]">
                             <h3 className="text-3xl">{movie.title}</h3>
                             <div className="flex text-gray-500 gap-3 text-lg">
-                                <p>{(movie.release_date)}</p>
+                                <p>{(movie.release_date).slice(0,4)}</p>
                                 <span>|</span>
                                 <p>U/A 7+</p>
                                 <span>|</span>
@@ -236,6 +279,8 @@ export default function SingleItems({
                 </div>
             </div>
             <Footer />
+        </div>
+        }
             </>
         )
     }

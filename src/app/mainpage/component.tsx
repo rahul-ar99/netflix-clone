@@ -19,16 +19,12 @@ import "slick-carousel/slick/slick-theme.css";
 interface Movie{
     poster_path:string;
     title:string;
+    id:number;
 }
 
-export default function ComponentMain({genreId,genreName}){
+export default function ComponentMain({genreId, genreName}){
 
-    let arr = [];
-    let arrStart = 0;
-    let arrEnd = arrStart + 15;
-    for(let i=1;i<=15;i++){
-        arr.push(i)
-    }
+
 
 
     // add movie details to movie state
@@ -37,6 +33,8 @@ export default function ComponentMain({genreId,genreName}){
 
     // api is full load then the site will show
     const [isLoading, setIsLoading] = useState(true)
+
+    const [imageList, setImageList] = useState<Movie[]>([])
     
 
 
@@ -50,28 +48,37 @@ export default function ComponentMain({genreId,genreName}){
         // await fetch("https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986")
 
 
-        fetch(`https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986&language=en-US&sort_by=release_date.desc&page=1&with_genres=${genreId}`)
+        await fetch(`https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986&language=en-US&sort_by=release_date.desc&page=1&with_genres=${genreId}`)
         .then(res => res.json())
-        .then(json => {setMovieList(json.results),setIsLoading(false);})
+        .then(json => {setMovieList(json.results)})
+
+
+        await fetch("https://api.themoviedb.org/3/movie/now_playing?api_key=c335ae1ffb9a62f766ee249471af6986")
+        .then(res1 => res1.json())
+        .then(json => {setImageList(json.result) })
+
+        setIsLoading(false)
+    }
+
+    async function getImages(){
+
     }
 
     useEffect(()=>{
         getMovie()
+        console.log(imageList)
     },[])
     
 
     const settings = {
-        // className: "center",
         centerMode: false,
         infinite: false,
         centerPadding: "0px",
         slidesToShow: 6,
         speed: 1000,
         rows: 1,
-        // slidesPerRow: 6,
         slidesToScroll:5
         };
-
 
     return(
         <>
