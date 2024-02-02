@@ -94,7 +94,6 @@ export default function ComponentMain({genreId, genreName}){
             <h5 className="text-2xl mb-3">{genreName}</h5>
             
             <div className="flex pb-5 items-center px-3">
-                <button className="w-[20px] h-full flex "><img src="/assets/images/left_arrow.png" alt="" className="invert h-min w-min"/></button>
                 <div className="flex gap-2 w-full flex-col">
                     <ul className="flex w-full gap-1" >
                         {isLoading ? (<p>Loading Movies...</p>):
@@ -122,7 +121,6 @@ export default function ComponentMain({genreId, genreName}){
                         }
                     </ul>
                 </div>
-                <button className="w-[20px] h-full flex items-center justify-center"><img src="/assets/images/right_arrow.png" alt="" className="invert h-min w-min"/></button>
             </div>
         </>
     )

@@ -53,14 +53,10 @@ export default function SingleItems({
                     setImageList(imageData)
                     // console.log(imageList)
                 }
-
-                setIsLoading(false)
-
-                
+                setIsLoading(false)   
             } catch (error){
                 console.error("error asdf",error)
             }
-
         }
 
         const getImage = async () =>{
@@ -77,8 +73,13 @@ export default function SingleItems({
             };
             
         }
+        function time(input){
+            const hour = input/60;
+            const minits = input%60;
+            console.log(hour, minits)
 
-
+        }
+        
         useEffect(()=>{
             getMovie()
             getImage()
