@@ -8,6 +8,7 @@ import Footer from "../components/Footer"
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { useRouter } from "next/navigation";
+import MovieList from "./movieList";
 
 
 interface Details{
@@ -80,25 +81,34 @@ export default function MainPage(){
                 <Navbar />
                 <button className="p-2 h-min rounded-xl bg-red-600" onClick={handleLogout}>Logout</button>
             </div>
-            <div className="w-screen p-5 pb-10">
-                <div className="w-[600px]">
-                    <h3 className="text-4xl">Netflix Originals</h3>
-                    <p className="text-xl">Netflix is the home of amazing original ptogamming that you can't find anywhere else. Movies, TV shows, specials and more, it's all tailored specifically to you.</p>
+            <div className="px-14">
+                <div className="w-screen p-5 pb-10">
+                    <div className="w-[600px]">
+                        <h3 className="text-4xl">Netflix Originals</h3>
+                        <p className="text-xl">Netflix is the home of amazing original progamming that you can't find anywhere else. Movies, TV shows, specials and more, it's all tailored specifically to you.</p>
+                    </div>
+                </div>
+                <div className="px-5">
+
+                    <MovieList categoryLink={"now_playing"} categoryName={"Now Playing"}/>
+                    <MovieList categoryLink={"popular"} categoryName={"Popular"} />
+                    <MovieList categoryLink={"upcoming"} categoryName={"Upcoming"} />
+                    <MovieList categoryLink={"top_rated"} categoryName={"Top Rated"} />
+                    {/* {console.log(genre)} */}
+                    { isloading?<p>Loading......</p>:
+                        [...Array(19)].map((i,j)=>{
+                            return(
+                                <>
+                                    <ComponentMain genreId={genre.genres[j].id} genreName={genre.genres[j].name}/>                        
+                                </>)
+                            
+                        }
+                        
+                        )
+                    }
+            
                 </div>
             </div>
-            {/* {console.log(genre)} */}
-            { isloading?<p>Loading......</p>:
-
-                [...Array(19)].map((i,j)=>{
-                    return(<>
-                                <ComponentMain genreId={genre.genres[j].id} genreName={genre.genres[j].name}/>                        
-                            </>)
-                    
-                    }
-                    
-                    )
-                }
-        
             <Footer />
         </>
             // console.log(genre)

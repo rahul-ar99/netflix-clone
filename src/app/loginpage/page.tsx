@@ -34,12 +34,12 @@ export default function LoginPage(){
         const email = emailRef.current.value;
         const password = passwordRef.current.value;
 
+
         signInWithEmailAndPassword(auth,email,password)
             .then((userCredential)=>{
                 const user = userCredential.user;
                 alert('signup Successful')
                 router.push("/mainpage");
-
             })
             .catch((error)=>{
                 const errorCode = error.code;
@@ -47,7 +47,6 @@ export default function LoginPage(){
                 setMessage("Username or Password is wrong")
                 // alert (errorMessage)
             })
-
     }
 
     return(
@@ -64,16 +63,13 @@ export default function LoginPage(){
                             type="email" 
                             placeholder="Email or Phone number"
                             ref={emailRef}
-                            // onChange={(e)=>setUsername(e.target.value)}
                             />
                         <p></p>
                         <input 
                             className="h-14 w-full rounded px-3 bg-neutral-900/[0.8]" 
                             type="password" 
                             placeholder="Password" 
-                            // onChange={(e)=>setPassword(e.target.value)}
                             ref={passwordRef}
-                            
                             />  
                         <input className="h-12 w-full rounded bg-red-600 mt-3" type="submit" value="Log In"/>
                     </form>
