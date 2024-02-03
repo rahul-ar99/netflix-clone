@@ -39,20 +39,10 @@ export default function SingleItems({
                 // console.log(movieData)
 
 
-                const res2 = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`)
-                const similarmovieData = await res2.json();
-                if(similarmovieData){
-                    setSimilarmovie(similarmovieData)
-                }
-                // console.log(similarmovie)
+     
 
                 
-                const res1 = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/images?api_key=c335ae1ffb9a62f766ee249471af6986`)
-                const imageData = await res1.json();
-                if(imageData){
-                    setImageList(imageData)
-                    // console.log(imageList)
-                }
+                
                 setIsLoading(false)   
             } catch (error){
                 console.error("error asdf",error)

@@ -91,7 +91,7 @@ export default function MainPage(){
                 <div className="px-5">
 
                     <MovieList categoryLink={"now_playing"} categoryName={"Now Playing"}/>
-                    <MovieList categoryLink={"popular"} categoryName={"Popular"} />
+                    {/* <MovieList categoryLink={"popular"} categoryName={"Popular"} /> */}
                     <MovieList categoryLink={"upcoming"} categoryName={"Upcoming"} />
                     <MovieList categoryLink={"top_rated"} categoryName={"Top Rated"} />
                     {/* {console.log(genre)} */}
