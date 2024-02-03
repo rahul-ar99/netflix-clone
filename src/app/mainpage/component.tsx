@@ -83,7 +83,7 @@ export default function ComponentMain({genreId, genreName}){
         centerMode: false,
         infinite: false,
         centerPadding: "0px",
-        slidesToShow: 4.3,
+        slidesToShow: 5.3,
         speed: 1000,
         rows: 1,
         slidesToScroll:4
@@ -91,7 +91,7 @@ export default function ComponentMain({genreId, genreName}){
 
     return(
         <>
-            <h5 className="text-2xl mb-3">{genreName}</h5>
+            <h5 className="text-2xl mb-6">{genreName}</h5>
             
             <div className="flex pb-5 items-center px-3">
                 <div className="flex gap-2 w-full flex-col">
@@ -99,14 +99,17 @@ export default function ComponentMain({genreId, genreName}){
                         {isLoading ? (<p>Loading Movies...</p>):
                             (<Slider {...settings} className="w-full flex">
                                 { movieList.map((movie,index)=>{
-                                    if(movie.backdrop_path!=null){
+                                    // if(movie.backdrop_path!=null){
                                         return (
-                                            <li key={index} className="w-min h-auto">
+                                            <li key={index} className="w-min h-auto mb-10">
                                             <div>
                                                 <Link href={`/mainpage/${movie.id}`} key={index}>
-                                                    <div className="flex flex-col justify-center items-center " >
-                                                        <div className="w-[380px] h-auto ">  
-                                                            <img src={`${MOVIE_IMG_URL}${movie.backdrop_path}`} alt="Movie image" className="" />
+                                                    <div className="flex flex-col justify-center items-center" >
+                                                        <div className="w-[310px] h-[180px]   overflow-hidden bg-cover">  
+                                                            {(movie.backdrop_path)?<img src={`${MOVIE_IMG_URL}${movie.backdrop_path}`} alt="Movie image" className="" />:<img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="Movie image" className="bg-cover" />}
+
+                                                            
+
                                                         </div>
                                                     <p className="mt-2 text-lg">{movie.title}</p>
                                                     </div>
@@ -114,7 +117,7 @@ export default function ComponentMain({genreId, genreName}){
                                             </div>
                                             </li>
                                         )
-                                    }
+                                    // }
                                 })}
                             
                             </Slider>)

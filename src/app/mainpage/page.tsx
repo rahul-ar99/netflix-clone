@@ -77,14 +77,14 @@ export default function MainPage(){
     else{
         return (
             <>
-            <div className="flex pr-4 justify-center items-center">
+            <div className="flex pr-4 justify-center items-center bg-black">
                 <Navbar />
                 <button className="p-2 h-min rounded-xl bg-red-600" onClick={handleLogout}>Logout</button>
             </div>
-            <div className="px-14">
+            <div className="px-14 pt-10">
                 <div className="w-screen p-5 pb-10">
                     <div className="w-[600px]">
-                        <h3 className="text-4xl">Netflix Originals</h3>
+                        <h3 className="text-6xl font-bold mb-3">Netflix Originals</h3>
                         <p className="text-xl">Netflix is the home of amazing original progamming that you can't find anywhere else. Movies, TV shows, specials and more, it's all tailored specifically to you.</p>
                     </div>
                 </div>

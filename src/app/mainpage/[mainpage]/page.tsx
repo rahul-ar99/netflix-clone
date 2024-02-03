@@ -94,7 +94,7 @@ export default function SingleItems({
             imageLoad?<p>other loading</p>:
             <div>
 
-            <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .95) 40%,rgba(0, 0, 0, .8) 50%,transparent),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`,width:"100%"}} className="w-screen h-screen bg-cover bg-no-repeat z-[-1]">
+            <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .9) 25%,rgba(0, 0, 0, .8) 40%,rgba(0,0,0,.0) 100%),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`,width:"100%"}} className="w-screen h-screen bg-cover bg-no-repeat z-[-1]">
                 <div className="flex pr-6 bg-black items-center">   
                     <Navbar />
                     <button className="px-3 py-2 h-min bg-red-600 font-bold rounded">Logout</button>
