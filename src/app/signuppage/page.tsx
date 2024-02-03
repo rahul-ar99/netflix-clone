@@ -27,16 +27,24 @@ export default function LoginPage(){
 
 
 
+    // create useRef element for email and password
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
 
-    const emailRef = useRef();
-    const passwordRef = useRef();
-
-
+    // creating signin function
     const signin = (e) =>{
-        e.preventDefault();
-        const email = emailRef.current.value;
-        const password = passwordRef.current.value;
 
+        
+        // its for load correctly
+        e.preventDefault();
+
+
+        // receive data from user
+        const email = emailRef.current?.value;
+        const password = passwordRef.current?.value;
+
+
+        // create user with firebase auth
         createUserWithEmailAndPassword(auth,email,password)
             .then((userCredential)=>{
                 const user = userCredential.user;

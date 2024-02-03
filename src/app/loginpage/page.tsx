@@ -4,41 +4,48 @@ import Link  from "next/link"
 import { useRouter } from "next/navigation";
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar";
-import React, {useRef, useState} from "react"
+import React, {useRef,ChangeEvent, useState} from "react"
 import { getAuth,signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import axios from "axios"
 
 
+interface SignInProp {}
 
-
-export default function LoginPage(){
-
+// export default function LoginPage(){
+const LoginPage: React.FC<SignInProp> = () =>{
     // if user is entered correct details, then redirect to main page
     const router = useRouter();
 
-
-
-
     const [message, setMessage] = useState("")
-    
+    const [emailInput, setEmail] = useState('');
+    const [passwordInput, setPassword] = useState('');
+
+    const handleEmailchange = (e:ChangeEvent<HTMLInputElement>)=>{
+        setEmail(e.target.value)
+    }
+    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>)=>{
+        setPassword(e.target.value)
+    }
+
+    const emailRef = useRef<HTMLInputElement>(null);
+    const passwordRef = useRef<HTMLInputElement>(null);
 
 
-    const emailRef = useRef();
-    const passwordRef = useRef();
+
 
 
     const login = (e) =>{
         e.preventDefault();
         setMessage("")
-        const email = emailRef.current.value;
-        const password = passwordRef.current.value;
+        const email = emailRef.current?.value ?? "";
+        const password = passwordRef.current?.value ?? "";
 
 
         signInWithEmailAndPassword(auth,email,password)
             .then((userCredential)=>{
                 const user = userCredential.user;
-                alert('signup Successful')
+                // alert('signup Successful')
                 router.push("/mainpage");
             })
             .catch((error)=>{
@@ -98,3 +105,4 @@ export default function LoginPage(){
         </>
     )
 }
+export default LoginPage
