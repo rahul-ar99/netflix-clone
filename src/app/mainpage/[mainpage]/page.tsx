@@ -19,7 +19,7 @@ export default function SingleItems({
         params:{mainpage:string}
     }){
 
-        const [movie, setMovie] = useState<Movie |null>()
+        const [movie, setMovie] = useState<Movie |null>([])
         const [imageList, setImageList] = useState([])
         const [similarmovie, setSimilarmovie] = useState([])
 
@@ -27,6 +27,14 @@ export default function SingleItems({
         const [isLoading, setIsLoading] = useState(true)
         const [imageLoad, setimageLoad] = useState(true)
 
+        // const request1 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/images?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
+        // const request2 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
+        // Promise.all([request1, request2])
+        //     .then(([data1, data2]) => {
+        //         // console.log(data1, data2);
+        //         setImageList(data1.results)
+        //         setMovieList(data2.results)
+        //     })
         const getMovie = async () =>{
             try {
 
@@ -36,19 +44,16 @@ export default function SingleItems({
                 if(movieData){
                     setMovie(movieData)
                 }
-                // console.log(movieData)
+                console.log(movieData)
 
 
-     
-
-                
-                
-                setIsLoading(false)   
+                    
+                // setIsLoading(false)   
             } catch (error){
                 console.error("error asdf",error)
             }
         }
-
+        
         const getImage = async () =>{
             try {
                 const res1 = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/images?api_key=c335ae1ffb9a62f766ee249471af6986`)
@@ -64,18 +69,19 @@ export default function SingleItems({
             
         }
         function time(input){
-            const hour = input/60;
+            const hour = Math.floor(input/60);
             const minits = input%60;
-            console.log(hour, minits)
-
+            return `${hour}h ${minits}m`
+            
         }
         
         useEffect(()=>{
             getMovie()
             getImage()
+            setIsLoading(false)  
         },[])
-
-
+        
+        
 
         
         return (
@@ -101,7 +107,7 @@ export default function SingleItems({
                                 <span>|</span>
                                 <p>U/A 7+</p>
                                 <span>|</span>
-                                <p>{movie.runtime}m</p>
+                                <p>{time(movie.runtime)}</p>
                                 <span>|</span>
                                 {/* <p>{movie.genres[0].name}</p> */}
                             </div>  
