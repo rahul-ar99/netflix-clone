@@ -14,13 +14,17 @@ interface Movie{
 
 }
 
+interface Image{
+
+}
+
 export default function SingleItems({
     params}:{
         params:{mainpage:string}
     }){
 
         const [movie, setMovie] = useState<Movie |null>([])
-        const [imageList, setImageList] = useState([])
+        const [imageList, setImageList] = useState<Image | null>([])
         const [similarmovie, setSimilarmovie] = useState([])
 
 
@@ -43,6 +47,9 @@ export default function SingleItems({
                 const movieData = await res.json();
                 if(movieData){
                     setMovie(movieData)
+                    if(movie){
+                        setIsLoading(false)
+                    }
                 }
                 console.log(movieData)
 
@@ -52,6 +59,7 @@ export default function SingleItems({
             } catch (error){
                 console.error("error asdf",error)
             }
+            getImage()
         }
         
         const getImage = async () =>{
@@ -60,9 +68,12 @@ export default function SingleItems({
                 const imageData = await res1.json();
                 if(imageData){
                     setImageList(imageData)
+                    if(imageList){
+                        setimageLoad(false)
+                        console.log(imageList)
+                    }
                 }
-                console.log(imageList)
-                setimageLoad(false)
+                // setimageLoad(false)
             }catch(error){
                 
             };
@@ -77,8 +88,8 @@ export default function SingleItems({
         
         useEffect(()=>{
             getMovie()
-            getImage()
-            setIsLoading(false)  
+            
+            // setIsLoading(false)  
         },[])
         
         
@@ -102,14 +113,17 @@ export default function SingleItems({
                         </div>
                         <div className="w-[600px]">
                             <h3 className="text-3xl">{movie.title}</h3>
-                            <div className="flex text-gray-500 gap-3 text-lg">
+                            <div className="flex text-gray-500 gap-3 text-lg items-center">
                                 <p>{(movie.release_date).slice(0,4)}</p>
                                 <span>|</span>
-                                <p>U/A 7+</p>
+                                <span className="border-[1px] p-1">
+
+                                {movie.adult ?<p>A</p>:<p>U/A 7+</p>}
+                                </span>
                                 <span>|</span>
                                 <p>{time(movie.runtime)}</p>
                                 <span>|</span>
-                                {/* <p>{movie.genres[0].name}</p> */}
+                                <p>{movie.genres[0].name}</p>
                             </div>  
                             <div className="text-lg ">
                                 <p className="text-justify py-4">{movie.overview}</p>

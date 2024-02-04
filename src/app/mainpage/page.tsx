@@ -36,7 +36,7 @@ export default function MainPage(){
     const handleLogout =  async () =>{
         try{
             await signOut(auth);
-            router.push('/loginpage')
+            router.push('/')
         }catch{
             const errorMessage = (error as Error).message;
             console.error("logout error:", errorMessage)
