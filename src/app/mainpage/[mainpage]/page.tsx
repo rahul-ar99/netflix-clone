@@ -4,6 +4,7 @@ import Navbar from "@/app/components/Navbar"
 import Footer from "@/app/components/Footer"
 import { MOVIE_IMG_URL } from "@/app/axiosConfig"
 import { useEffect, useState } from "react"
+import Video from "./components/videos"
 import Link from "next/link"
 
 interface Movie{
@@ -12,15 +13,16 @@ interface Movie{
     runtime:number;
     overview:string;
     poster_path:string;
+    name:string;
 
 }
 
 interface Image{
 
+    logos:string;
 }
 
 interface imageList{
-    logos:string;
 }
 
 export default function SingleItems({
@@ -30,23 +32,27 @@ export default function SingleItems({
 
 
         // import movie details to movie state
-        const [movie, setMovie] = useState<Movie |null>([])
+        const [movie, setMovie] = useState<Movie>([])
 
 
         // import movie images to imageList state
-        const [imageList, setImageList] = useState<Image | null>([])
+        const [imageList, setImageList] = useState<Image>([])
 
 
         // import this movie's similarMovies to similarMovie State
-        const [similarmovie, setSimilarmovie] = useState([])
+        const [similarmovie, setSimilarmovie] = useState<Movie>([])
 
 
         // import movie trailer and other videos to movieVideo
-        const [movieVideo, setMovieVideo] = useState([])
+        const [movieVideo, setMovieVideo] = useState<Movie>([])
 
 
         // checking is there api has videos
         const [isVideo, setIsvideo] = useState(true)
+
+
+        // import upcoming movie details to 
+        const [movieUpcoming, setMovieUpcoming] = useState([])
 
 
         // 
@@ -55,6 +61,10 @@ export default function SingleItems({
 
         // check all api is load and fetch to state
         const [isLoading, setIsLoading] = useState(true)
+
+
+        // youtube video modal
+        const[videoModal, setVideoModal] = useState(false)
 
 
         // convert min to (hour and minits)
@@ -72,16 +82,20 @@ export default function SingleItems({
             function fetchData(){
                 const request1 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/images?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
                 const request2 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
-                const request3 = fetch(` https://api.themoviedb.org/3/movie/${params.mainpage}/videos?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
+                const request3 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/videos?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
                 const request4 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/credits?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
-                Promise.all([request1, request2,request3,request4])
-                .then(([data1, data2, data3, data4]) => {
+                const request5 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/similar?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
+                const request6 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/similar?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response =>response.json());                
+                Promise.all([request1, request2,request3,request4, request5, request6])
+                .then(([data1, data2, data3, data4, data5 , data6]) => {
                     setImageList(data1)
                     setMovie(data2)
                     setMovieVideo(data3.results)
                     setMovieCredits(data4)
+                    setSimilarmovie(data5.results)
+                    setMovieUpcoming(data6.results)
                     // console.log(data3)
-                    if(movie && imageList){
+                    if(movie && imageList && movieUpcoming && similarmovie){
                         setIsLoading(false)
                     }
                 })
@@ -96,6 +110,16 @@ export default function SingleItems({
                 setIsvideo(false)
             }
         },[])
+
+        useEffect(()=>{
+            if(videoModal===true){
+                document.body.style.overflow = "hidden"
+            }
+            else{
+                document.body.style.overflow = "auto"
+
+            }
+        },[videoModal])
         function logo(){
             imageList.logos.map((i)=>{
                 if(i.iso_639_1 === "en"){
@@ -105,6 +129,10 @@ export default function SingleItems({
         }
         console.log(imageList)
         console.log(movieCredits)
+        console.log(movieVideo)
+        console.log(movie)
+        console.log(similarmovie, "similar")
+        console.log(movieUpcoming, "upcoming")
         
 
         
@@ -114,18 +142,18 @@ export default function SingleItems({
             // imageLoad?<p>other loading</p>:
             <div>
 
-            <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .9) 25%,rgba(0, 0, 0, .8) 40%,rgba(0,0,0,.0) 100%),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`,width:"100%"}} className="w-screen h-screen bg-cover bg-no-repeat z-[-1]">
+            <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .9) 25%,rgba(0, 0, 0, .8) 40%,rgba(0,0,0,.0) 100%),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`,height:"1080px", width:"1980px"}} className="w-screen h-screen bg-cover bg-no-repeat z-[-1]">
                 <div className="flex pr-6 bg-black items-center">   
                     <Navbar />
                     <button className="px-3 py-2 h-min bg-red-600 font-bold rounded">Logout</button>
                 </div>
                 <div className="px-20"> 
                     <div className="mt-[250px]">
-                        <div className="h-auto max-w-[400px] mb-6">
-                            <img src={`${MOVIE_IMG_URL}${imageList.logos[0].file_path}`} alt="" className="h-full"/>
+                        <div className="mb-6">
+                            <img src={`${MOVIE_IMG_URL}${imageList.logos[0].file_path}`} alt="" className="max-h-[300px] max-w-[300px]"/>
                         </div>
                         <div className="w-[600px]">
-                            <h3 className="text-3xl">{movie.title}</h3>
+                            <h3 className="text-3xl font-bold mb-3">{movie.title}</h3>
                             <div className="flex text-gray-500 gap-3 text-lg items-center">
                                 <p>{(movie.release_date).slice(0,4)}</p>
                                 <span>|</span>
@@ -140,7 +168,9 @@ export default function SingleItems({
                             </div>  
                             <div className="text-lg ">
                                 <p className="text-justify py-4">{movie.overview}</p>
-                                <p><span className=" text-gray-500 ">Starring: </span> adam sandler, Bill Burr, Cecily Strong</p>
+                                <p><span className=" text-gray-500 ">Starring: </span> {[...Array(3)].map((i,j)=>{
+                                    return(<>{movieCredits.cast[j].name}, </>)
+                                })}</p>
                             </div>
                         </div>
                     </div>
@@ -155,7 +185,6 @@ export default function SingleItems({
                 </div>
                 <hr  className="h-1 "/>
             </div>
-            {isVideo ? <> sdfgfd</>:
             <div className="px-20 flex flex-col">
                 <div className="flex text-xl pb-4 gap-2">
                     <h2>Videos</h2>
@@ -163,25 +192,29 @@ export default function SingleItems({
                     <h4>{movie.title}</h4>
                 </div>
 
-                <div className="flex">
-                {[...Array(4)].map((i,j)=>{
-                    return(
+                <div className="flex w-[1757px] overflow-scroll">
+                    {movieVideo.map((element, index)=>{
+                        if(index>=4){
+                            return null
+                        }
+                                    return (
                         <>
-                            <Link href={""}>
-                            <div className="w-min ">
-                                <div className="w-[820px] mr-9 relative">
-                                    {/* <img src={`${MOVIE_IMG_URL}${imageList[0].backdrops[0].file_path}`} alt="asdf" className="w-full" /> */}
-                                    <img src="../../assets/images/play.png" alt="" className="w-[100px] absolute bottom-0 left-0" />
-                                </div>
-                                <p className="w-full">Trailer: {movieVideo[j].name}</p>
-                            </div>
-                            </Link>
-                        </>
-                    )
-                })}
+                        <Link href={""} key={index}>
+                        <div className="w-min" onClick={()=>setVideoModal(true)} >
+                                    <>
+                                        <div className="w-[820px] mr-9 relative">
+                                            <img src={`http://image.tmdb.org/t/p/w500${imageList.backdrops[index].file_path}`} alt="asdf" className="w-full" />
+                                            <img src="../../assets/images/play.png" alt="" className="w-[100px] absolute bottom-0 left-0" />
+                                        </div>  
+                                    </>
+                            <p className="w-full">Trailer: {movieVideo[index].name}</p>
+                        </div>
+                        {/* {videoModal && <Video modal={setVideoModal} videoId={`${movieVideo[index].key}`} />} */}
+                        </Link>
+                        </>                
+                        )})}
                 </div>
             </div>
-            }
             <div className="px-20 flex flex-col mt-10">
                 <div>
                     <h2 className="text-3xl font-bold pb-[10px]">More Details</h2>
@@ -193,12 +226,12 @@ export default function SingleItems({
                             <p className="">Download and watch everywhere you go.</p>
                         </div>
                         <div className="w-[24%]">
-                            <h6 className="text-gray-700 text-xl">Watch offline</h6>
-                            <p className="">Download and watch everywhere you go.</p>
+                            <h6 className="text-gray-700 text-xl">Genres</h6>
+                            <p className="">{movie.genres.map((i)=> `${i.name}, ` )}</p>
                         </div>
                         <div className="w-[24%]">
-                            <h6 className="text-gray-700 text-xl">Watch offline</h6>
-                            <p className="">Download and watch everywhere you go.</p>
+                            <h6 className="text-gray-700 text-xl">This show is..</h6>
+                            <p className="">Excting, Romantic</p>
                         </div>
                         <div className="w-[24%]">
                             <h6 className="text-gray-700 text-xl">Watch offline</h6>
@@ -214,105 +247,41 @@ export default function SingleItems({
                 <div>
                     <h6 className="text-gray-700 text-xl">Cast</h6>
                     <div className="flex flex-wrap">
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
-                        <p className="w-[25%]">Adam Sandler</p>
- 
+                        {movieCredits.cast.map((element , index)=>{
+                            if(index>= 16){
+                                return null
+                            }else{
+                                return <p className="w-[25%]">{element.name}</p>
+                            }
+                        })}
                     </div>
                 </div>
             </div>
             <div className="px-20 flex flex-col mt-10 w-full">
                 <h2 className="text-3xl font-bold pb-[10px]">More Like This</h2>
                 <div className="flex flex-wrap justify-between gap-y-[20px]">
-                    {/* {similarmovie.map(()=>{
-                        return <h1>hii</h1>
-                    })} */}
-                    <div className="min-w-[24%]">
-                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
-                    </div>
-                    <div className="min-w-[24%]">
-                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
-                    </div>
-                    <div className="min-w-[24%]">
-                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
-                    </div>
-                    <div className="min-w-[24%]">
-                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
-                    </div>
-                    <div className="min-w-[24%]">
-                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
-                    </div>
-                    <div className="min-w-[24%]">
-                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
-                    </div>
-                    <div className="min-w-[24%]">
-                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
-                    </div>
-                    <div className="min-w-[24%]">
-                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
-                    </div>
-                    <div className="min-w-[24%]">
-                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
-                    </div>
-                    <div className="min-w-[24%]">
-                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
-                    </div>
-                    <div className="min-w-[24%]">
-                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
-                    </div>
-                    <div className="min-w-[24%]">
-                        <img src="/assets/images/movies/movie_images1.jpg" alt="" className="w-full h-full" />
-                    </div>
+                    {similarmovie.map((element, index)=>{
+                        return <Link href={`/mainpage/${element.id}`}>
+                                    <div className="min-w-[20%]">
+                                        <img src={`http://image.tmdb.org/t/p/w500${element.poster_path}`} alt="" className="w-[400px]" />
+                                    </div>
+                                </Link>
+                    })}
                 </div>
             </div>
             <div  className="px-20 flex flex-col mt-10 w-full">
-                <h2 className="text-3xl font-bold pb-[10px]">Coming Soon</h2>
+                <h2 className="text-5xl font-bold pb-[10px]">Coming Soon</h2>
                 <div className="w-full flex flex-wrap justify-between gap-y-4">
-                    <div className="w-[24%]">
-                        <h6 className="text-lg font-bold">NCIS</h6>
-                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
-                    </div>
-                    <div className="w-[24%]">
-                        <h6 className="text-lg font-bold">NCIS</h6>
-                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
-                    </div>
-                    <div className="w-[24%]">
-                        <h6 className="text-lg font-bold">NCIS</h6>
-                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
-                    </div>
-                    <div className="w-[24%]">
-                        <h6 className="text-lg font-bold">NCIS</h6>
-                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
-                    </div>
-                    <div className="w-[24%]">
-                        <h6 className="text-lg font-bold">NCIS</h6>
-                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
-                    </div>
-                    <div className="w-[24%]">
-                        <h6 className="text-lg font-bold">NCIS</h6>
-                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
-                    </div>
-                    <div className="w-[24%]">
-                        <h6 className="text-lg font-bold">NCIS</h6>
-                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
-                    </div>
-                    <div className="w-[24%]">
-                        <h6 className="text-lg font-bold">NCIS</h6>
-                        <p className="">Follow the quirky agents of the NCIS -- the Naval Criminal Investigative Service  as they track down terrorists and other high-profile criminals.</p>
-                    </div>
+                    {movieUpcoming.map((element, index)=>{
+                        if(index>=12){
+                            return null
+                        }
                     
+                        return <div className="w-[24%]">
+                                    <h6 className="text-lg font-bold">{element.title}</h6>
+                                    <p className="">{element.overview.slice(0,200)+("...")}</p>
+                                </div>
+                    })}
                 </div>
             </div>
             <Footer />
