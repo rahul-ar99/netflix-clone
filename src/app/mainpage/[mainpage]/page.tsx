@@ -19,6 +19,10 @@ interface Image{
 
 }
 
+interface imageList{
+    logos:string;
+}
+
 export default function SingleItems({
     params}:{
         params:{mainpage:string}

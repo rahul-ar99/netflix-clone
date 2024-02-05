@@ -43,7 +43,7 @@ export default function Intro() {
 
             <div>
                 {/* first */}
-                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800">
+                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800 py-10">
                     <div className="w-[600px]">
                         <h4 className="text-5xl font-bold mb-7">Enjoy on your TV</h4>
                         <p className="text-2xl text-wrap ">Watch on smart TVs, PlayStation, Xbox, Chromecast, Apply TV, Blu-ray players and more.</p>
@@ -58,7 +58,7 @@ export default function Intro() {
                 </div>
 
                 {/* second */}
-                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800 pb-7">
+                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800 py-10">
                     <div className="relative">
                         <img src="assets/images/mobile.jpg" alt=""  className="z-0"/>
                         <div className="flex border-2 rounded-xl p-2 absolute bottom-5 bg-black left-36 items-center">
@@ -78,7 +78,7 @@ export default function Intro() {
                     </div>
                 </div>
                 {/* third */}
-                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800">
+                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800  py-10">
                     <div className="w-[600px]">
                         <h4 className="text-5xl font-bold mb-7">Watch everywhere</h4>
                         <p className="text-2xl text-wrap ">Steam unlimited movies and TV Shows on your phone, tablet, laptop, and TV.</p>
@@ -92,7 +92,7 @@ export default function Intro() {
                     </div>
                 </div>
                 {/* fourth */}
-                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800">
+                <div className="w-screen flex justify-center items-center  border-b-8 border-neutral-800  py-10">
                     <div className="relative">
                         <img src="assets/images/children.png" alt=""  className="z-0"/>
                         
