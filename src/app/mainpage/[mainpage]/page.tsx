@@ -29,56 +29,7 @@ export default function SingleItems({
 
 
         const [isLoading, setIsLoading] = useState(true)
-        const [imageLoad, setimageLoad] = useState(true)
 
-        // const request1 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/images?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
-        // const request2 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
-        // Promise.all([request1, request2])
-        //     .then(([data1, data2]) => {
-        //         // console.log(data1, data2);
-        //         setImageList(data1.results)
-        //         setMovieList(data2.results)
-        //     })
-        const getMovie = async () =>{
-            try {
-
-                // const res = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`)
-                const res = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`)
-                const movieData = await res.json();
-                if(movieData){
-                    setMovie(movieData)
-                    if(movie){
-                        setIsLoading(false)
-                    }
-                }
-                console.log(movieData)
-
-
-                    
-                // setIsLoading(false)   
-            } catch (error){
-                console.error("error asdf",error)
-            }
-            getImage()
-        }
-        
-        const getImage = async () =>{
-            try {
-                const res1 = await fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/images?api_key=c335ae1ffb9a62f766ee249471af6986`)
-                const imageData = await res1.json();
-                if(imageData){
-                    setImageList(imageData)
-                    if(imageList){
-                        setimageLoad(false)
-                        console.log(imageList)
-                    }
-                }
-                // setimageLoad(false)
-            }catch(error){
-                
-            };
-            
-        }
         function time(input){
             const hour = Math.floor(input/60);
             const minits = input%60;
@@ -87,10 +38,28 @@ export default function SingleItems({
         }
         
         useEffect(()=>{
-            getMovie()
+            function fetchData(){
+
+                const request1 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/images?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
+                const request2 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
+                Promise.all([request1, request2])
+                .then(([data1, data2]) => {
+                    setImageList(data1)
+                    setMovie(data2)
+                    // console.log(data1,data2)
+                    if(movie && imageList){
+                        setIsLoading(false)
+                    }
+                })
+                .catch(error =>{
+                    console.error("error: ",error)
+                })
+            }
+            fetchData()
             
             // setIsLoading(false)  
         },[])
+        console.log(imageList)
         
         
 
@@ -98,7 +67,7 @@ export default function SingleItems({
         return (
             <>
             {isLoading?<p>loading.....</p>:
-            imageLoad?<p>other loading</p>:
+            // imageLoad?<p>other loading</p>:
             <div>
 
             <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .9) 25%,rgba(0, 0, 0, .8) 40%,rgba(0,0,0,.0) 100%),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`,width:"100%"}} className="w-screen h-screen bg-cover bg-no-repeat z-[-1]">
