@@ -1,18 +1,5 @@
 
 
-
-export default function SinglePageVideo(){
-
-
-    const getVideo = async () =>{
-        try{
-            const res = await fetch("")
-        }
-    }
-
-
-    return(
-        <>
-        </>
-    )
+export default function Video(){
+    return<></>
 }

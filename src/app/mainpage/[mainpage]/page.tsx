@@ -4,6 +4,7 @@ import Navbar from "@/app/components/Navbar"
 import Footer from "@/app/components/Footer"
 import { MOVIE_IMG_URL } from "@/app/axiosConfig"
 import { useEffect, useState } from "react"
+import Link from "next/link"
 
 interface Movie{
     title:string;
@@ -23,13 +24,36 @@ export default function SingleItems({
         params:{mainpage:string}
     }){
 
+
+        // import movie details to movie state
         const [movie, setMovie] = useState<Movie |null>([])
+
+
+        // import movie images to imageList state
         const [imageList, setImageList] = useState<Image | null>([])
+
+
+        // import this movie's similarMovies to similarMovie State
         const [similarmovie, setSimilarmovie] = useState([])
 
 
+        // import movie trailer and other videos to movieVideo
+        const [movieVideo, setMovieVideo] = useState([])
+
+
+        // checking is there api has videos
+        const [isVideo, setIsvideo] = useState(true)
+
+
+        // 
+        const [movieCredits, setMovieCredits] = useState([])
+
+
+        // check all api is load and fetch to state
         const [isLoading, setIsLoading] = useState(true)
 
+
+        // convert min to (hour and minits)
         function time(input){
             const hour = Math.floor(input/60);
             const minits = input%60;
@@ -38,15 +62,21 @@ export default function SingleItems({
         }
         
         useEffect(()=>{
-            function fetchData(){
 
+
+            // fetching api and import data and fetching to state
+            function fetchData(){
                 const request1 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/images?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
                 const request2 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
-                Promise.all([request1, request2])
-                .then(([data1, data2]) => {
+                const request3 = fetch(` https://api.themoviedb.org/3/movie/${params.mainpage}/videos?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
+                const request4 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/credits?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
+                Promise.all([request1, request2,request3,request4])
+                .then(([data1, data2, data3, data4]) => {
                     setImageList(data1)
                     setMovie(data2)
-                    // console.log(data1,data2)
+                    setMovieVideo(data3.results)
+                    setMovieCredits(data4)
+                    // console.log(data3)
                     if(movie && imageList){
                         setIsLoading(false)
                     }
@@ -58,9 +88,19 @@ export default function SingleItems({
             fetchData()
             
             // setIsLoading(false)  
+            if(movieVideo.length>0){
+                setIsvideo(false)
+            }
         },[])
+        function logo(){
+            imageList.logos.map((i)=>{
+                if(i.iso_639_1 === "en"){
+                    return i.file_path
+                }
+            })
+        }
         console.log(imageList)
-        
+        console.log(movieCredits)
         
 
         
@@ -77,8 +117,8 @@ export default function SingleItems({
                 </div>
                 <div className="px-20"> 
                     <div className="mt-[250px]">
-                        <div className="w-[200px] h-[100px]">
-                            {/* <img src="/assets/images/logo.png" alt="" /> */}
+                        <div className="h-auto max-w-[400px] mb-6">
+                            <img src={`${MOVIE_IMG_URL}${imageList.logos[0].file_path}`} alt="" className="h-full"/>
                         </div>
                         <div className="w-[600px]">
                             <h3 className="text-3xl">{movie.title}</h3>
@@ -107,24 +147,37 @@ export default function SingleItems({
                 <hr  className="h-1 "/>
                 <div className="w-full py-6 flex justify-center">
 
-                    <p className="text-xl w-[600px] text-center">{movie.overview}</p>
+                    <p className="text-xl w-[1000px] text-center">{movie.overview}</p>
                 </div>
                 <hr  className="h-1 "/>
             </div>
+            {isVideo ? <> sdfgfd</>:
             <div className="px-20 flex flex-col">
                 <div className="flex text-xl pb-4 gap-2">
                     <h2>Videos</h2>
                     <span>|</span>
                     <h4>{movie.title}</h4>
                 </div>
-                <div>
 
-                    <div>
-                    <img src={`${MOVIE_IMG_URL}${movie.poster_path}`} alt="asdf" />
-                    </div>
-                    <p>Trailer: {movie.title}</p>
+                <div className="flex">
+                {[...Array(4)].map((i,j)=>{
+                    return(
+                        <>
+                            <Link href={""}>
+                            <div className="w-min ">
+                                <div className="w-[820px] mr-9 relative">
+                                    {/* <img src={`${MOVIE_IMG_URL}${imageList[0].backdrops[0].file_path}`} alt="asdf" className="w-full" /> */}
+                                    <img src="../../assets/images/play.png" alt="" className="w-[100px] absolute bottom-0 left-0" />
+                                </div>
+                                <p className="w-full">Trailer: {movieVideo[j].name}</p>
+                            </div>
+                            </Link>
+                        </>
+                    )
+                })}
                 </div>
             </div>
+            }
             <div className="px-20 flex flex-col mt-10">
                 <div>
                     <h2 className="text-3xl font-bold pb-[10px]">More Details</h2>
