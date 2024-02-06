@@ -14,6 +14,8 @@ interface Movie{
     overview:string;
     poster_path:string;
     name:string;
+    adult:Boolean;
+    genres:Array<Movie>;
 
 }
 
@@ -32,19 +34,19 @@ export default function SingleItems({
 
 
         // import movie details to movie state
-        const [movie, setMovie] = useState<Movie>([])
+        const [movie, setMovie] = useState< Movie | null>(null)
 
 
         // import movie images to imageList state
-        const [imageList, setImageList] = useState<Image>([])
+        const [imageList, setImageList] = useState<Image| null>(null)
 
 
         // import this movie's similarMovies to similarMovie State
-        const [similarmovie, setSimilarmovie] = useState<Movie>([])
+        const [similarmovie, setSimilarmovie] = useState([])
 
 
         // import movie trailer and other videos to movieVideo
-        const [movieVideo, setMovieVideo] = useState<Movie>([])
+        const [movieVideo, setMovieVideo] = useState([])
 
 
         // checking is there api has videos
@@ -138,12 +140,15 @@ export default function SingleItems({
         
         return (
             <>
-            {isLoading?<p>loading.....</p>:
+            {isLoading?<div className="w-screen h-screen flex justify-center items-center">
+                        <video src="https://tenor.com/view/loading-gif-20768857"></video>
+                </div>
+                :
             // imageLoad?<p>other loading</p>:
             <div>
 
-            <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .9) 25%,rgba(0, 0, 0, .8) 40%,rgba(0,0,0,.0) 100%),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`,height:"1080px", width:"1980px"}} className="w-screen h-screen bg-cover bg-no-repeat z-[-1]">
-                <div className="flex pr-6 bg-black items-center">   
+            <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .9) 25%,rgba(0, 0, 0, .8) 40%,rgba(0,0,0,.0) 100%),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`}} className="h-screen w-screen bg-cover bg-no-repeat z-[-1]">
+                <div className="flex w-screen pr-6 bg-black items-center">   
                     <Navbar />
                     <button className="px-3 py-2 h-min bg-red-600 font-bold rounded">Logout</button>
                 </div>
@@ -199,7 +204,7 @@ export default function SingleItems({
                         }
                                     return (
                         <>
-                        <Link href={""} key={index}>
+                        {/* <Link href={""} key={index}> */}
                         <div className="w-min" onClick={()=>setVideoModal(true)} >
                                     <>
                                         <div className="w-[820px] mr-9 relative">
@@ -209,8 +214,8 @@ export default function SingleItems({
                                     </>
                             <p className="w-full">Trailer: {movieVideo[index].name}</p>
                         </div>
-                        {/* {videoModal && <Video modal={setVideoModal} videoId={`${movieVideo[index].key}`} />} */}
-                        </Link>
+                        {videoModal && <Video modal={setVideoModal} videoId={`${movieVideo[index].key}`} />}
+                        {/* </Link> */}
                         </>                
                         )})}
                 </div>
