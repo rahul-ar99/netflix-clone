@@ -30,14 +30,16 @@ interface Details{
 }
 
 
-export default function MainPage(){
+
+ const MainPage: React.FC = ()=> {
+    const [genre, setGenre] = useState<Details | null>([]);
 
     const router = useRouter()
     const handleLogout =  async () =>{
         try{
             await signOut(auth);
             router.push('/')
-        }catch{
+        }catch(error){
             const errorMessage = (error as Error).message;
             console.error("logout error:", errorMessage)
         }
@@ -45,7 +47,6 @@ export default function MainPage(){
     }
 
 
-    const [genre,setGenre] = useState<Details | null>([])
     const [isloading, setIsloading] = useState(true)
     
     const genreDetail = async () =>{
@@ -121,3 +122,5 @@ export default function MainPage(){
         )
     }
 }
+
+export default MainPage;

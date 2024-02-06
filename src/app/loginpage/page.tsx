@@ -8,6 +8,7 @@ import React, {useRef,ChangeEvent, useState} from "react"
 import { getAuth,signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 import axios from "axios"
+import { MouseEvent } from 'react';
 
 
 interface SignInProp {}
@@ -35,7 +36,7 @@ const LoginPage: React.FC<SignInProp> = () =>{
 
 
 
-    const login = (e) =>{
+    const login = (e: MouseEvent<HTMLFormElement>) =>{
         e.preventDefault();
         setMessage("")
         const email = emailRef.current?.value ?? "";
