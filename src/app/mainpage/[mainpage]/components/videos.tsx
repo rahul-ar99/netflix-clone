@@ -13,7 +13,7 @@ export default function Video({videoId, modal}){
                     </video>  */}
                     {/* <iframe height="580" width="500"
             src={`https://www.youtube.com/watch?v=${videoId}`}>
-      </iframe> */}
+            </iframe> */}
  
             </div>
         </div>
