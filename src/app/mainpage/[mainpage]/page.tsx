@@ -175,7 +175,7 @@ export default function SingleItems({
 
                                 {movie.adult ?<p>A</p>:<p>U/A 7+</p>}
                                 </span>
-                                <span>|</span>
+                                <span>|</span>``
                                 <p>{time(movie.runtime)}</p>
                                 <span>|</span>
                                 <p>{movie.genres[0].name}</p>
