@@ -1,6 +1,11 @@
 
+interface VideoProps {
+    videoId: string;
+    modal: (value: boolean) => void;
+}
 
-export default function Video({videoId, modal}){
+
+const Video: React.FC<VideoProps> = ({ videoId, modal }) => {
     console.log(videoId)
     return(<>
         <div className="flex justify-center items-center fixed w-screen h-screen left-0 top-0  overflow-hidden" >
@@ -12,3 +17,4 @@ export default function Video({videoId, modal}){
         </div>
     </>)
 }
+export default Video;
