@@ -17,6 +17,7 @@ interface Movie{
     name:string;
     adult:Boolean;
     genres:Array<Movie>;
+    backdrop_path:string;
 
 }
 
@@ -27,21 +28,43 @@ interface Image{
 }
 
 interface movieCr{
+
+    cast:[{name:string}];
+    name:string;
 }
 
+
+interface similarMovi{
+    id:number;
+    poster_path:string;
+}
+interface videoMovie{
+    name:string;
+    key:string;
+}
+
+
+interface Upcoming{
+    title:string;
+    overview:string;
+}
+
+// const movieCredits:movieCr[] = []
+// const movieUpcoming:Upcoming[] = []
+// const similarmovie:similarMovi[] = []
 const SingleItems = ({params}:{params:{mainpage:string}}) =>{
 
 
         // import movie details to movie state
-        const [movie, setMovie] = useState< Movie | null>(null)
+        const [movie, setMovie] = useState< Movie | null>([])
 
 
         // import movie images to imageList state
-        const [imageList, setImageList] = useState<Image| null>(null)
+        const [imageList, setImageList] = useState<Image| null>([])
 
 
         // import this movie's similarMovies to similarMovie State
-        const [similarmovie, setSimilarmovie] = useState([])
+        const [similarmovie, setSimilarmovie] = useState<similarMovi | null>([])
 
 
         // import movie trailer and other videos to movieVideo
@@ -53,7 +76,7 @@ const SingleItems = ({params}:{params:{mainpage:string}}) =>{
 
 
         // import upcoming movie details to 
-        const [movieUpcoming, setMovieUpcoming] = useState([])
+        const [movieUpcoming, setMovieUpcoming] = useState<Upcoming |null>([])
 
 
         // 
@@ -149,163 +172,172 @@ const SingleItems = ({params}:{params:{mainpage:string}}) =>{
                 </div>
                 :
             // imageLoad?<p>other loading</p>:
+            <>
+            {movie && movieCredits && movieUpcoming && similarmovie && imageList &&
             <div>
             <div>
 
-            <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .9) 25%,rgba(0, 0, 0, .8) 40%,rgba(0,0,0,.0) 100%),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`}} className="h-screen w-screen bg-cover bg-no-repeat z-[-1]">
-                <div className="flex w-screen pr-6 bg-black items-center">   
-                    <Navbar />
-                    <button className="px-3 py-2 h-min bg-red-600 font-bold rounded">Logout</button>
-                </div>
-                {movie &&
+                <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .9) 25%,rgba(0, 0, 0, .8) 40%,rgba(0,0,0,.0) 100%),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`}} className="h-screen w-screen bg-cover bg-no-repeat z-[-1]">
+                    <div className="flex w-screen pr-6 bg-black items-center">   
+                        <Navbar />
+                        <button className="px-3 py-2 h-min bg-red-600 font-bold rounded">Logout</button>
+                    </div>
 
-                    <div className="px-20"> 
-                        <div className="mt-[250px]">
-                            <div className="mb-6">
-                                {imageList && imageList.logos && imageList.logos[0] && (
-                                    <img src={`${MOVIE_IMG_URL}${imageList.logos[0].file_path}`} alt="" className="max-h-[300px] max-w-[300px]"/>
-                                    )}
-                            </div>
-                            <div className="w-[600px]">
-                                <h3 className="text-3xl font-bold mb-3">{movie.title}</h3>
-                                <div className="flex text-gray-500 gap-3 text-lg items-center">
-                                    <p>{(movie.release_date).slice(0,4)}</p>
-                                    <span>|</span>
-                                    <span className="border-[1px] p-1">
-                                    {movie.adult ?<p>A</p>:<p>U/A 7+</p>}
-                                    </span>
-                                    <span>|</span>``
-                                    <p>{time(movie.runtime)}</p>
-                                    <span>|</span>
-                                    <p>{movie.genres[0].name}</p>
-                                </div>  
-                                <div className="text-lg ">
-                                    <p className="text-justify py-4">{movie.overview}</p>
-                                    <p><span className=" text-gray-500 ">Starring: </span> {[...Array(3)].map((i,j)=>{
-                                        return(<>{movieCredits.cast[j].name}, </>)
-                                    })}</p>
+                        <div className="px-20"> 
+                            <div className="mt-[250px]">
+                                <div className="mb-6">
+                                    {imageList && imageList.logos && imageList.logos[0] && (
+                                        <img src={`${MOVIE_IMG_URL}${imageList.logos[0].file_path}`} alt="" className="max-h-[300px] max-w-[300px]"/>
+                                        )}
+                                </div>
+                                <div className="w-[600px]">
+                                    <h3 className="text-3xl font-bold mb-3">{movie.title}</h3>
+                                    <div className="flex text-gray-500 gap-3 text-lg items-center">
+                                        <p>{(movie.release_date).slice(0,4)}</p>
+                                        <span>|</span>
+                                        <span className="border-[1px] p-1">
+                                        {movie.adult ?<p>A</p>:<p>U/A 7+</p>}
+                                        </span>
+                                        <span>|</span>``
+                                        <p>{time(movie.runtime)}</p>
+                                        <span>|</span>
+                                        <p>{movie.genres[0].name}</p>
+                                    </div>  
+                                    <div className="text-lg ">
+                                        <p className="text-justify py-4">{movie.overview}</p>
+                                        <p><span className=" text-gray-500 ">Starring: </span> 
+                                        {Array.isArray(movieCredits) && movieCredits.cast.map((element,index)=>{
+                                            if(index>=3){
+                                                return null
+                                            }
+                                            return(<>{movieCredits.cast[index].name}, </>)
+                                        })}</p>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
+                        </div>
                     </div>
+                </div>
+                <div className="px-20 flex flex-col  my-16">
+                    <hr  className="h-1 "/>
+                    <div className="w-full py-6 flex justify-center">
+
+                        <p className="text-xl w-[1000px] text-center">{movie.overview}</p>
+                    </div>
+                    <hr  className="h-1 "/>
+                </div>
+                <div className="px-20 flex flex-col">
+                    <div className="flex text-xl pb-4 gap-2">
+                        <h2>Videos</h2>
+                        <span>|</span>
+                        <h4>{movie.title}</h4>
+                    </div>
+
+                    <div className="flex w-[1757px] overflow-scroll">
+                        {/* <Slider {...settings} className="w-full flex"> */}
+
+                            {Array.isArray(movieVideo) && movieVideo.map((element, index)=>{
+                                if(index>=4){
+                                    return null
+                                }
+                                if(element){
+                                    return (
+                                        <div className="flex ">
+                                    {/* <Link href={""} key={index}> */}
+                                        <div className="w-min" onClick={()=>setVideoModal(true)} >
+                                                    <>
+                                                        <div className="w-[820px] mr-9 relative">
+                                                            <img src={`http://image.tmdb.org/t/p/w1280${imageList.backdrops[index].file_path}`} alt="asdf" className="w-full" />
+                                                            <img src="../../assets/images/play.png" alt="" className="w-[100px] absolute bottom-0 left-0" />
+                                                        </div>  
+                                                    </>
+                                            <p className="w-full">Trailer: {element.name}</p>
+                                        </div>
+                                        {videoModal && <Video modal={setVideoModal} videoId={`${element.key}`} />}
+                                        {/* </Link> */}
+                                    </div>                
+                                )
+                                }else{
+                                    return null
+                                }
+                            })}
+                        {/* </Slider> */}
+                    </div>
+                </div>
+                <div className="px-20 flex flex-col mt-10">
+                    <div>
+                        <h2 className="text-3xl font-bold pb-[10px]">More Details</h2>
+                    </div>
+                    <div className="block">
+                        <div className="flex  pb-[20px]">
+                            <div className="w-[24%]">
+                                <h6 className="text-gray-700 text-xl">Watch offline</h6>
+                                <p className="">Download and watch everywhere you go.</p>
+                            </div>
+                            <div className="w-[24%]">
+                                <h6 className="text-gray-700 text-xl">Genres</h6>
+                                <p className="">{movie.genres.map((i)=> `${i.name}, ` )}</p>
+                            </div>
+                            <div className="w-[24%]">
+                                <h6 className="text-gray-700 text-xl">This show is..</h6>
+                                <p className="">Excting, Romantic</p>
+                            </div>
+                            <div className="w-[24%]">
+                                <h6 className="text-gray-700 text-xl">Watch offline</h6>
+                                <p className="">Download and watch everywhere you go.</p>
+                            </div>
+                            
+                        </div>
+                        <div className=" pb-[20px]">
+                            <h6 className="text-gray-700 text-xl">Subtitles</h6>
+                            <p>English</p>
+                        </div>
+                    </div>
+                    <div>
+                        <h6 className="text-gray-700 text-xl">Cast</h6>
+                        <div className="flex flex-wrap">
+                            {Array.isArray(movieCredits?.cast) && movieCredits.cast.map((element , index)=>{
+                                if(index >= 16){
+                                    return null;
+                                }else{
+                                    return (<p className="w-[25%]">{element.name}</p>)
+                                }
+                            })}
+                        </div>
+                    </div>
+                </div>
+                <div className="px-20 flex flex-col mt-10 w-full">
+                    <h2 className="text-3xl font-bold pb-[10px]">More Like This</h2>
+                    <div className="flex flex-wrap justify-between gap-y-[20px]">
+                        {Array.isArray(similarmovie) && similarmovie.map((element, index)=>{
+                            return <Link href={`/mainpage/${element.id}`}>
+                                        <div className="min-w-[10%]">
+                                            <img src={`http://image.tmdb.org/t/p/w500${element.poster_path}`} alt="" className="w-[300px]" />
+                                        </div>
+                                    </Link>
+                        })}
+                    </div>
+                </div>
+                <div  className="px-20 flex flex-col mt-10 w-full">
+                    <h2 className="text-5xl font-bold pb-[10px]">Coming Soon</h2>
+                    <div className="w-full flex flex-wrap justify-between gap-y-4">
+                        {Array.isArray(movieUpcoming)&& movieUpcoming.map((element, index)=>{
+                            if(index>=12){
+                                return null
+                            }
+                            
+                            return <div className="w-[24%]" key={index}>
+                                        <h6 className="text-lg font-bold">{element.title}</h6>
+                                        <p className="">{element.overview.slice(0,200)+("...")}</p>
+                                    </div>
+                        })}
+                    </div>
+                </div>
+                <Footer />
+                </div>
+            }</>
             }
-                </div>
-            </div>
-            <div className="px-20 flex flex-col  my-16">
-                <hr  className="h-1 "/>
-                <div className="w-full py-6 flex justify-center">
-
-                    <p className="text-xl w-[1000px] text-center">{movie.overview}</p>
-                </div>
-                <hr  className="h-1 "/>
-            </div>
-            <div className="px-20 flex flex-col">
-                <div className="flex text-xl pb-4 gap-2">
-                    <h2>Videos</h2>
-                    <span>|</span>
-                    <h4>{movie.title}</h4>
-                </div>
-
-                <div className="flex w-[1757px] overflow-scroll">
-                    {/* <Slider {...settings} className="w-full flex"> */}
-
-                        {movieVideo.map((element, index)=>{
-                            if(index>=4){
-                                return null
-                            }
-                            return (
-                                <div className="flex ">
-                                {/* <Link href={""} key={index}> */}
-                                    <div className="w-min" onClick={()=>setVideoModal(true)} >
-                                                <>
-                                                    <div className="w-[820px] mr-9 relative">
-                                                        <img src={`http://image.tmdb.org/t/p/w1280${imageList.backdrops[index].file_path}`} alt="asdf" className="w-full" />
-                                                        <img src="../../assets/images/play.png" alt="" className="w-[100px] absolute bottom-0 left-0" />
-                                                    </div>  
-                                                </>
-                                        <p className="w-full">Trailer: {movieVideo[index].name}</p>
-                                    </div>
-                                    {videoModal && <Video modal={setVideoModal} videoId={`${movieVideo[index].key}`} />}
-                                    {/* </Link> */}
-                                </div>                
-                            )
-                        })}
-                    {/* </Slider> */}
-                </div>
-            </div>
-            <div className="px-20 flex flex-col mt-10">
-                <div>
-                    <h2 className="text-3xl font-bold pb-[10px]">More Details</h2>
-                </div>
-                <div className="block">
-                    <div className="flex  pb-[20px]">
-                        <div className="w-[24%]">
-                            <h6 className="text-gray-700 text-xl">Watch offline</h6>
-                            <p className="">Download and watch everywhere you go.</p>
-                        </div>
-                        <div className="w-[24%]">
-                            <h6 className="text-gray-700 text-xl">Genres</h6>
-                            <p className="">{movie.genres.map((i)=> `${i.name}, ` )}</p>
-                        </div>
-                        <div className="w-[24%]">
-                            <h6 className="text-gray-700 text-xl">This show is..</h6>
-                            <p className="">Excting, Romantic</p>
-                        </div>
-                        <div className="w-[24%]">
-                            <h6 className="text-gray-700 text-xl">Watch offline</h6>
-                            <p className="">Download and watch everywhere you go.</p>
-                        </div>
-                        
-                    </div>
-                    <div className=" pb-[20px]">
-                        <h6 className="text-gray-700 text-xl">Subtitles</h6>
-                        <p>English</p>
-                    </div>
-                </div>
-                <div>
-                    <h6 className="text-gray-700 text-xl">Cast</h6>
-                    <div className="flex flex-wrap">
-                        {movieCredits.cast.map((element , index)=>{
-                            if(index>= 16){
-                                return null
-                            }else{
-                                return <p className="w-[25%]">{element.name}</p>
-                            }
-                        })}
-                    </div>
-                </div>
-            </div>
-            <div className="px-20 flex flex-col mt-10 w-full">
-                <h2 className="text-3xl font-bold pb-[10px]">More Like This</h2>
-                <div className="flex flex-wrap justify-between gap-y-[20px]">
-                    {similarmovie.map((element, index)=>{
-                        return <Link href={`/mainpage/${element.id}`}>
-                                    <div className="min-w-[10%]">
-                                        <img src={`http://image.tmdb.org/t/p/w500${element.poster_path}`} alt="" className="w-[300px]" />
-                                    </div>
-                                </Link>
-                    })}
-                </div>
-            </div>
-            <div  className="px-20 flex flex-col mt-10 w-full">
-                <h2 className="text-5xl font-bold pb-[10px]">Coming Soon</h2>
-                <div className="w-full flex flex-wrap justify-between gap-y-4">
-                    {movieUpcoming.map((element, index)=>{
-                        if(index>=12){
-                            return null
-                        }
-                    
-                        return <div className="w-[24%]">
-                                    <h6 className="text-lg font-bold">{element.title}</h6>
-                                    <p className="">{element.overview.slice(0,200)+("...")}</p>
-                                </div>
-                    })}
-                </div>
-            </div>
-            <Footer />
-        </div>
-        }
             </>
         )
     }

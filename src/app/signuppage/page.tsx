@@ -23,16 +23,13 @@ export default function LoginPage(){
     //stype method 
 
     const [message, setMessage] = useState("")
-    
-
-
-
+  
     // create useRef element for email and password
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
 
     // creating signin function
-    const signin = (e) =>{
+    const signin = (e: React.FormEvent<HTMLFormElement>) =>{
 
         
         // its for load correctly
@@ -43,20 +40,22 @@ export default function LoginPage(){
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
 
+        if(email && password){
 
-        // create user with firebase auth
-        createUserWithEmailAndPassword(auth,email,password)
+            // create user with firebase auth
+            createUserWithEmailAndPassword(auth,email,password)
             .then((userCredential)=>{
                 const user = userCredential.user;
                 alert('login Successful')
                 router.push("/mainpage");
-
+                
             })
             .catch((error)=>{
                 const errorCode = error.code;
                 const errorMessage = error.message;
                 alert (errorMessage)
             })
+        }
 
     }
 
