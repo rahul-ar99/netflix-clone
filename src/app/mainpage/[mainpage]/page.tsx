@@ -6,6 +6,7 @@ import { MOVIE_IMG_URL } from "@/app/axiosConfig"
 import { useEffect, useState } from "react"
 import Video from "./components/videos"
 import Link from "next/link"
+import Slider from "react-slick"
 
 interface Movie{
     title:string;
@@ -34,11 +35,11 @@ export default function SingleItems({
 
 
         // import movie details to movie state
-        const [movie, setMovie] = useState< Movie | null>(null)
+        const [movie, setMovie] = useState< Movie | null>([])
 
 
         // import movie images to imageList state
-        const [imageList, setImageList] = useState<Image| null>(null)
+        const [imageList, setImageList] = useState<Image| null>([])
 
 
         // import this movie's similarMovies to similarMovie State
@@ -76,9 +77,23 @@ export default function SingleItems({
             return `${hour}h ${minits}m`
             
         }
+
+
+        // this is for slider settings
+        const settings = {
+            centerMode: false,
+            infinite: false,
+            centerPadding: "0px",
+            slidesToShow: 3,
+            speed: 1000,
+            rows: 1,
+            slidesToScroll:4,
+            arrow:true,
+            
+            };
+
         
         useEffect(()=>{
-
 
             // fetching api and import data and fetching to state
             function fetchData(){
@@ -113,6 +128,10 @@ export default function SingleItems({
             }
         },[])
 
+
+
+        // it's for when trailer video click modal is open and site scroll stop
+        // then modal is close site scroll will scroll
         useEffect(()=>{
             if(videoModal===true){
                 document.body.style.overflow = "hidden"
@@ -122,21 +141,8 @@ export default function SingleItems({
 
             }
         },[videoModal])
-        function logo(){
-            imageList.logos.map((i)=>{
-                if(i.iso_639_1 === "en"){
-                    return i.file_path
-                }
-            })
-        }
-        console.log(imageList)
-        console.log(movieCredits)
-        console.log(movieVideo)
-        console.log(movie)
-        console.log(similarmovie, "similar")
-        console.log(movieUpcoming, "upcoming")
-        
 
+        
         
         return (
             <>
@@ -155,7 +161,10 @@ export default function SingleItems({
                 <div className="px-20"> 
                     <div className="mt-[250px]">
                         <div className="mb-6">
-                            <img src={`${MOVIE_IMG_URL}${imageList.logos[0].file_path}`} alt="" className="max-h-[300px] max-w-[300px]"/>
+                            {
+                                imageList && imageList.logos && imageList.logos[0] && (
+                                    <img src={`${MOVIE_IMG_URL}${imageList.logos[0].file_path}`} alt="" className="max-h-[300px] max-w-[300px]"/>
+                            )}
                         </div>
                         <div className="w-[600px]">
                             <h3 className="text-3xl font-bold mb-3">{movie.title}</h3>
@@ -198,26 +207,30 @@ export default function SingleItems({
                 </div>
 
                 <div className="flex w-[1757px] overflow-scroll">
-                    {movieVideo.map((element, index)=>{
-                        if(index>=4){
-                            return null
-                        }
-                                    return (
-                        <>
-                        {/* <Link href={""} key={index}> */}
-                        <div className="w-min" onClick={()=>setVideoModal(true)} >
-                                    <>
-                                        <div className="w-[820px] mr-9 relative">
-                                            <img src={`http://image.tmdb.org/t/p/w500${imageList.backdrops[index].file_path}`} alt="asdf" className="w-full" />
-                                            <img src="../../assets/images/play.png" alt="" className="w-[100px] absolute bottom-0 left-0" />
-                                        </div>  
-                                    </>
-                            <p className="w-full">Trailer: {movieVideo[index].name}</p>
-                        </div>
-                        {videoModal && <Video modal={setVideoModal} videoId={`${movieVideo[index].key}`} />}
-                        {/* </Link> */}
-                        </>                
-                        )})}
+                    {/* <Slider {...settings} className="w-full flex"> */}
+
+                        {movieVideo.map((element, index)=>{
+                            if(index>=4){
+                                return null
+                            }
+                            return (
+                                <div className="flex ">
+                                {/* <Link href={""} key={index}> */}
+                                    <div className="w-min" onClick={()=>setVideoModal(true)} >
+                                                <>
+                                                    <div className="w-[820px] mr-9 relative">
+                                                        <img src={`http://image.tmdb.org/t/p/w1280${imageList.backdrops[index].file_path}`} alt="asdf" className="w-full" />
+                                                        <img src="../../assets/images/play.png" alt="" className="w-[100px] absolute bottom-0 left-0" />
+                                                    </div>  
+                                                </>
+                                        <p className="w-full">Trailer: {movieVideo[index].name}</p>
+                                    </div>
+                                    {videoModal && <Video modal={setVideoModal} videoId={`${movieVideo[index].key}`} />}
+                                    {/* </Link> */}
+                                </div>                
+                            )
+                        })}
+                    {/* </Slider> */}
                 </div>
             </div>
             <div className="px-20 flex flex-col mt-10">
@@ -267,8 +280,8 @@ export default function SingleItems({
                 <div className="flex flex-wrap justify-between gap-y-[20px]">
                     {similarmovie.map((element, index)=>{
                         return <Link href={`/mainpage/${element.id}`}>
-                                    <div className="min-w-[20%]">
-                                        <img src={`http://image.tmdb.org/t/p/w500${element.poster_path}`} alt="" className="w-[400px]" />
+                                    <div className="min-w-[10%]">
+                                        <img src={`http://image.tmdb.org/t/p/w500${element.poster_path}`} alt="" className="w-[300px]" />
                                     </div>
                                 </Link>
                     })}
