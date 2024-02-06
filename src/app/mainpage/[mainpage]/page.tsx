@@ -10,7 +10,7 @@ import Slider from "react-slick"
 
 interface Movie{
     title:string;
-    release_date:Date;
+    release_date:string;
     runtime:number;
     overview:string;
     poster_path:string;
@@ -21,25 +21,23 @@ interface Movie{
 }
 
 interface Image{
-
-    logos:string;
+    
+    logos: { file_path: string }[];
+    backdrops:{file_path:string}[];
 }
 
-interface imageList{
+interface movieCr{
 }
 
-export default function SingleItems({
-    params}:{
-        params:{mainpage:string}
-    }){
+const SingleItems = ({params}:{params:{mainpage:string}}) =>{
 
 
         // import movie details to movie state
-        const [movie, setMovie] = useState< Movie | null>([])
+        const [movie, setMovie] = useState< Movie | null>(null)
 
 
         // import movie images to imageList state
-        const [imageList, setImageList] = useState<Image| null>([])
+        const [imageList, setImageList] = useState<Image| null>(null)
 
 
         // import this movie's similarMovies to similarMovie State
@@ -59,7 +57,7 @@ export default function SingleItems({
 
 
         // 
-        const [movieCredits, setMovieCredits] = useState([])
+        const [movieCredits, setMovieCredits] = useState<movieCr | null>([])
 
 
         // check all api is load and fetch to state
@@ -71,7 +69,7 @@ export default function SingleItems({
 
 
         // convert min to (hour and minits)
-        function time(input){
+        function time(input:number):string{
             const hour = Math.floor(input/60);
             const minits = input%60;
             return `${hour}h ${minits}m`
@@ -141,7 +139,7 @@ export default function SingleItems({
 
             }
         },[videoModal])
-
+        console.log(movie)
         
         
         return (
@@ -152,43 +150,46 @@ export default function SingleItems({
                 :
             // imageLoad?<p>other loading</p>:
             <div>
+            <div>
 
             <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .9) 25%,rgba(0, 0, 0, .8) 40%,rgba(0,0,0,.0) 100%),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`}} className="h-screen w-screen bg-cover bg-no-repeat z-[-1]">
                 <div className="flex w-screen pr-6 bg-black items-center">   
                     <Navbar />
                     <button className="px-3 py-2 h-min bg-red-600 font-bold rounded">Logout</button>
                 </div>
-                <div className="px-20"> 
-                    <div className="mt-[250px]">
-                        <div className="mb-6">
-                            {
-                                imageList && imageList.logos && imageList.logos[0] && (
-                                    <img src={`${MOVIE_IMG_URL}${imageList.logos[0].file_path}`} alt="" className="max-h-[300px] max-w-[300px]"/>
-                            )}
-                        </div>
-                        <div className="w-[600px]">
-                            <h3 className="text-3xl font-bold mb-3">{movie.title}</h3>
-                            <div className="flex text-gray-500 gap-3 text-lg items-center">
-                                <p>{(movie.release_date).slice(0,4)}</p>
-                                <span>|</span>
-                                <span className="border-[1px] p-1">
+                {movie &&
 
-                                {movie.adult ?<p>A</p>:<p>U/A 7+</p>}
-                                </span>
-                                <span>|</span>``
-                                <p>{time(movie.runtime)}</p>
-                                <span>|</span>
-                                <p>{movie.genres[0].name}</p>
-                            </div>  
-                            <div className="text-lg ">
-                                <p className="text-justify py-4">{movie.overview}</p>
-                                <p><span className=" text-gray-500 ">Starring: </span> {[...Array(3)].map((i,j)=>{
-                                    return(<>{movieCredits.cast[j].name}, </>)
-                                })}</p>
+                    <div className="px-20"> 
+                        <div className="mt-[250px]">
+                            <div className="mb-6">
+                                {imageList && imageList.logos && imageList.logos[0] && (
+                                    <img src={`${MOVIE_IMG_URL}${imageList.logos[0].file_path}`} alt="" className="max-h-[300px] max-w-[300px]"/>
+                                    )}
+                            </div>
+                            <div className="w-[600px]">
+                                <h3 className="text-3xl font-bold mb-3">{movie.title}</h3>
+                                <div className="flex text-gray-500 gap-3 text-lg items-center">
+                                    <p>{(movie.release_date).slice(0,4)}</p>
+                                    <span>|</span>
+                                    <span className="border-[1px] p-1">
+                                    {movie.adult ?<p>A</p>:<p>U/A 7+</p>}
+                                    </span>
+                                    <span>|</span>``
+                                    <p>{time(movie.runtime)}</p>
+                                    <span>|</span>
+                                    <p>{movie.genres[0].name}</p>
+                                </div>  
+                                <div className="text-lg ">
+                                    <p className="text-justify py-4">{movie.overview}</p>
+                                    <p><span className=" text-gray-500 ">Starring: </span> {[...Array(3)].map((i,j)=>{
+                                        return(<>{movieCredits.cast[j].name}, </>)
+                                    })}</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
+                    </div>
+            }
                 </div>
             </div>
             <div className="px-20 flex flex-col  my-16">
@@ -308,3 +309,5 @@ export default function SingleItems({
             </>
         )
     }
+
+export default SingleItems

@@ -12,20 +12,19 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 
-
-
-
-
 interface Movie{
     poster_path:string;
     title:string;
     id:number;
+    backdrop_path:string;
 }
 
-export default function ComponentMain({genreId, genreName}){
+interface ComponenetMainProp{
+    genreId:number;
+    genreName:string;
+}
 
-
-
+const ComponentMain:React.FC<ComponenetMainProp> = ({genreId, genreName})=>{
 
     // add movie details to movie state
     const [movieList, setMovieList] = useState<Movie[]>([])
@@ -37,10 +36,6 @@ export default function ComponentMain({genreId, genreName}){
     const [imageList, setImageList] = useState([])
     
 
-
-    
-
-
     // fetching movie image and name with api
     async function getMovie(){
 
@@ -51,33 +46,13 @@ export default function ComponentMain({genreId, genreName}){
         .then(res => res.json())
         .then(json => {setMovieList(json.results)})
         .then(()=>console.log(movieList))
-
-
-        // await fetch("https://api.themoviedb.org/3/movie/now_playing?api_key=c335ae1ffb9a62f766ee249471af6986")
-        // .then(res1 => res1.json())
-        // .then(json => {setImageList(json.result)})
-        // .then(()=> console.log(imageList))
-            
-        // const request1 = fetch(`https://api.themoviedb.org/3/discover/movie?api_key=c335ae1ffb9a62f766ee249471af6986&language=en-US&sort_by=release_date.desc&page=1&with_genres=${genreId}`).then(response => response.json());
-        // const request2 = fetch("https://api.themoviedb.org/3/movie/now_playing?api_key=c335ae1ffb9a62f766ee249471af6986").then(response => response.json());
-        // Promise.all([request1, request2])
-        // .then(([data1, data2]) => {
-        //     console.log(data1, data2);
-        //     setImageList(data1.results)
-        //     setMovieList(data2.results)
-
-        // })
-        // .catch(error => {
-        //     console.error(error);
-        // });
     }
 
     useEffect(()=>{
         getMovie()
         setIsLoading(false)
     },[])
-    console.log(movieList)
-    console.log(imageList)
+
 
     const settings = {
         centerMode: false,
@@ -128,3 +103,5 @@ export default function ComponentMain({genreId, genreName}){
         </>
     )
 }
+
+export default ComponentMain

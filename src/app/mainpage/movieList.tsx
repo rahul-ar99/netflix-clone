@@ -20,9 +20,16 @@ interface Movie{
     poster_path:string;
     title:string;
     id:number;
+    backdrop_path:string;
 }
 
-export default function MovieList({categoryLink,categoryName}){
+
+interface MovieListProp{
+    categoryLink: string;
+    categoryName:string;
+}
+
+const MovieList: React.FC<MovieListProp> = ({categoryLink,categoryName}) => {
 
 
 
@@ -119,3 +126,5 @@ export default function MovieList({categoryLink,categoryName}){
         </>
     )
 }
+
+export default MovieList;

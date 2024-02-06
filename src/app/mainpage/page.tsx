@@ -11,30 +11,24 @@ import { useRouter } from "next/navigation";
 import MovieList from "./movieList";
 
 
-interface Details{
-    adult:boolean;
-    genres: {name:string}[];
-    released_date?:string;
-    logo_path?:string;
-    original_title:string;
-    id:number;
-    backdrop_path:string;
-    title:string;
-    name:string;
-    runtime:number;
-    production_companies:{logo_path:string}[];
+
+
+interface Genre {
+    id: number;
+    name: string;
 }
 
-interface Details{
-    id:number;
-}
 
 
 
  const MainPage: React.FC = ()=> {
-    const [genre, setGenre] = useState<Details | null>([]);
-
+    const [genre, setGenre] = useState<Genre[] | null>(null);
+    const [isloading, setIsLoading] = useState(true)
     const router = useRouter()
+
+
+
+
     const handleLogout =  async () =>{
         try{
             await signOut(auth);
@@ -42,31 +36,25 @@ interface Details{
         }catch(error){
             const errorMessage = (error as Error).message;
             console.error("logout error:", errorMessage)
-        }
-        
+        }  
     }
 
 
-    const [isloading, setIsloading] = useState(true)
-    
-    const genreDetail = async () =>{
-        try{
-            const response = await fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=c335ae1ffb9a62f766ee249471af6986");
-            const json = await response.json();
 
-            if(json){
-                setGenre(json)
-                if(genre){
-                    setIsloading(false)
-                }
-                // console.log(json)
-            } 
-        }catch (error){
-            console.log(error)
-        }
-    }
     useEffect(()=>{
-        genreDetail()
+        const fetchGenre = async () => {
+    try {
+        const response = await fetch("https://api.themoviedb.org/3/genre/movie/list?api_key=c335ae1ffb9a62f766ee249471af6986");
+        const data = await response.json();
+        if (data.genres) {
+            setGenre(data.genres);
+            setIsLoading(false);
+        }
+    } catch (error) {
+        console.error(error);
+    }
+};
+fetchGenre();
     },[])
     if(isloading===false){
         // console.log(genre)
@@ -97,13 +85,12 @@ interface Details{
                     <MovieList categoryLink={"top_rated"} categoryName={"Top Rated"} />
                     {/* {console.log(genre)} */}
                     { isloading?<p>Loading......</p>:
-                        [...Array(19)].map((i,j)=>{
-                            return(
-                                <>
-                                    <ComponentMain genreId={genre.genres[j].id} genreName={genre.genres[j].name}/>                        
-                                </>)
-                            
-                        }
+                       (<>
+                            {genre && genre.map((genreItem, index) => (
+                                <ComponentMain key={index} genreId={genreItem.id} genreName={genreItem.name} />
+
+                            ))}
+                        </>
                         
                         )
                     }
@@ -112,13 +99,6 @@ interface Details{
             </div>
             <Footer />
         </>
-            // console.log(genre)
-            // <>
-            // {(for i in genre.genres){
-            //     return <h1>{i}</h1>
-            // }}
-            // <h1>{genre.genres[2]}</h1>
-            // </>
         )
     }
 }
