@@ -1,11 +1,10 @@
 "use client"
 
 import Link from "next/link"
-import Navbar from "../components/Navbar"
-import Footer from "../components/Footer"
+
 import { useEffect, useState } from "react"
 import { MOVIE_IMG_URL } from "../axiosConfig"
-import React, { Component } from "react";
+import React from "react";
 import Slider from "react-slick";
 
 import "slick-carousel/slick/slick.css";

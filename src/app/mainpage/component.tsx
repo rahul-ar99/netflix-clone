@@ -1,8 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import Navbar from "../components/Navbar"
-import Footer from "../components/Footer"
 import { useEffect, useState } from "react"
 import { MOVIE_IMG_URL } from "../axiosConfig"
 import React, { Component } from "react";

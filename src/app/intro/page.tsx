@@ -2,8 +2,7 @@
 import Link from "next/link"
 import Footer from "../components/Footer"
 
-
-export default function intro() {
+export default function Intro() {
     return (
 <>
         <div style={{backgroundImage:'linear-gradient(to bottom,rgba(0, 0, 0, 0.495),rgba(0, 0, 0, 0.313),rgba(0, 0, 0, 0.57)),url(../../assets/images/spotlight_1.jpg)'}} className="flex flex-col w-screen px-80 border-b-8 border-neutral-800">
@@ -104,7 +103,6 @@ export default function intro() {
                 </div>
             </div>
 
-            {/* Footer*/}
             <Footer />
     </>
     )
