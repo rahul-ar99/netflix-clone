@@ -18,11 +18,9 @@ interface Movie{
     adult:Boolean;
     genres:Array<Movie>;
     backdrop_path:string;
-
 }
 
 interface Image{
-    
     logos: { file_path: string }[];
     backdrops:{file_path:string}[];
 }
@@ -33,7 +31,6 @@ interface movieCr{
     name:string;
 }
 
-
 interface similarMovi{
     id:number;
     poster_path:string;
@@ -43,15 +40,10 @@ interface videoMovie{
     key:string;
 }
 
-
 interface Upcoming{
     title:string;
     overview:string;
 }
-
-// const movieCredits:movieCr[] = []
-// const movieUpcoming:Upcoming[] = []
-// const similarmovie:similarMovi[] = []
 
 interface SingleItemProp{
     params:{
@@ -63,19 +55,19 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
 
 
         // import movie details to movie state
-        const [movie, setMovie] = useState< Movie | null>([])
+        const [movie, setMovie] = useState< Movie | null>(null)
 
 
         // import movie images to imageList state
-        const [imageList, setImageList] = useState<Image| null>([])
+        const [imageList, setImageList] = useState<Image| null>(null)
 
 
         // import this movie's similarMovies to similarMovie State
-        const [similarmovie, setSimilarmovie] = useState<similarMovi | null>([])
+        const [similarmovie, setSimilarmovie] = useState<similarMovi | null>(null)
 
 
         // import movie trailer and other videos to movieVideo
-        const [movieVideo, setMovieVideo] = useState<videoMovie | null>([])
+        const [movieVideo, setMovieVideo] = useState<videoMovie | null>(null)
 
 
         // checking is there api has videos
@@ -83,11 +75,11 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
 
 
         // import upcoming movie details to 
-        const [movieUpcoming, setMovieUpcoming] = useState<Upcoming |null>([])
+        const [movieUpcoming, setMovieUpcoming] = useState<Upcoming |null>(null)
 
 
         // 
-        const [movieCredits, setMovieCredits] = useState<movieCr | null>([])
+        const [movieCredits, setMovieCredits] = useState<movieCr | null>(null)
 
 
         // check all api is load and fetch to state
@@ -139,10 +131,9 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
                     setMovieCredits(data4)
                     setSimilarmovie(data5.results)
                     setMovieUpcoming(data6.results)
-                    // console.log(data3)
-                    if(movie && imageList && movieUpcoming && similarmovie){
-                        setIsLoading(false)
-                    }
+                    
+                    // load after set all data's
+                    setIsLoading(false)
                 })
                 .catch(error =>{
                     console.error("error: ",error)
@@ -150,10 +141,7 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
             }
             fetchData()
             
-            // setIsLoading(false)  
-            // if(movieVideo.length>0){
-            //     setIsvideo(false)
-            // }
+
         },[])
 
 
