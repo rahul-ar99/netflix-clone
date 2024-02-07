@@ -6,7 +6,6 @@ import { MOVIE_IMG_URL } from "@/app/axiosConfig"
 import { useEffect, useState } from "react"
 import Video from "./components/videos"
 import Link from "next/link"
-import Slider from "react-slick"
 
 interface Movie{
     title:string;

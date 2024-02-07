@@ -14,7 +14,7 @@ import { MouseEvent } from 'react';
 interface SignInProp {}
 
 // export default function LoginPage(){
-const LoginPage: React.FC<SignInProp> = () =>{
+const loginpage: React.FC<SignInProp> = () =>{
     // if user is entered correct details, then redirect to main page
     const router = useRouter();
 
@@ -106,4 +106,4 @@ const LoginPage: React.FC<SignInProp> = () =>{
         </>
     )
 }
-export default LoginPage
+export default loginpage

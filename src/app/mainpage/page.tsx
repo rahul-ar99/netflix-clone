@@ -21,7 +21,7 @@ interface Genre {
 
 
 
- const MainPage: React.FC = ()=> {
+ const mainPage: React.FC = ()=> {
     const [genre, setGenre] = useState<Genre[] | null>(null);
     const [isloading, setIsLoading] = useState(true)
     const router = useRouter()
@@ -103,4 +103,4 @@ fetchGenre();
     }
 }
 
-export default MainPage;
+export default mainPage;
