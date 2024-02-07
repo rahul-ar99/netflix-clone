@@ -1,11 +1,12 @@
 "use client"
 
-import Navbar from "@/app/components/Navbar"
-import Footer from "@/app/components/Footer"
+import Navbar from "../../components/Navbar"
+import Footer from "../../components/Footer"
 import { MOVIE_IMG_URL } from "@/app/axiosConfig"
 import { useEffect, useState } from "react"
 import Video from "./_components/videos"
 import Link from "next/link"
+import Slider from "react-slick"
 
 interface Movie{
     title:string;
@@ -103,9 +104,9 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
             centerMode: false,
             infinite: false,
             centerPadding: "0px",
-            slidesToShow: 3,
+            slidesToShow: 5,
             speed: 1000,
-            rows: 1,
+            rows: 3,
             slidesToScroll:4,
             arrow:true,
             
@@ -143,20 +144,6 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
 
         },[])
 
-
-
-        // it's for when trailer video click modal is open and site scroll stop
-        // then modal is close site scroll will scroll
-        // useEffect(()=>{
-        //     if(videoModal===true){
-        //         document.body.style.overflow = "hidden"
-        //     }
-        //     else{
-        //         document.body.style.overflow = "auto"
-
-        //     }
-        // },[videoModal])
-        console.log(movie)
         
         
         return (
@@ -228,8 +215,8 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
                         <h4>{movie.title}</h4>
                     </div>
 
-                    <div className="flex w-[1757px] overflow-scroll">
-                        {/* <Slider {...settings} className="w-full flex"> */}
+                    <ul className="flex w-full">
+                        <Slider {...settings} className="w-full flex">
 
                             {Array.isArray(movieVideo) && movieVideo.map((element, index)=>{
                                 if(index>=4){
@@ -237,18 +224,18 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
                                 }
                                 if(element){
                                     return (
-                                        <div className="flex ">
-                                    {/* <Link href={""} key={index}> */}
-                                        <div className="w-min" onClick={()=>setVideoModal(true)} >
-                                                    <>
-                                                        <div className="w-[820px] mr-9 relative">
-                                                            <img src={`http://image.tmdb.org/t/p/w1280${imageList.backdrops[index].file_path}`} alt="asdf" className="w-full" />
-                                                            <img src="../../assets/images/play.png" alt="" className="w-[100px] absolute bottom-0 left-0" />
-                                                        </div>  
-                                                    </>
-                                            <p className="w-full">Trailer: {element.name}</p>
-                                        </div>
-                                        {videoModal && <Video modal={setVideoModal} videoId={`${element.key}`} />}
+                                    <div className="flex ">
+                                        {/* <Link href={""} key={index}> */}
+                                            <div className="w-min" onClick={()=>setVideoModal(true)} >
+                                                <>
+                                                    <div     className="w-[820px] mr-9 relative">
+                                                        <img src={`http://image.tmdb.org/t/p/w1280${imageList.backdrops[index].file_path}`} alt="asdf" className="w-full" />
+                                                        <img src="../../assets/images/play.png" alt="" className="w-[100px] absolute bottom-0 left-0" />
+                                                    </div>  
+                                                </>
+                                                <p className="w-full">Trailer: {element.name}</p>
+                                            </div>
+                                            {videoModal && <Video modal={setVideoModal} videoId={`${element.key}`} />}
                                         {/* </Link> */}
                                     </div>                
                                 )
@@ -256,8 +243,8 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
                                     return null
                                 }
                             })}
-                        {/* </Slider> */}
-                    </div>
+                        </Slider>
+                    </ul>
                 </div>
                 <div className="px-20 flex flex-col mt-10">
                     <div>
