@@ -52,7 +52,14 @@ interface Upcoming{
 // const movieCredits:movieCr[] = []
 // const movieUpcoming:Upcoming[] = []
 // const similarmovie:similarMovi[] = []
-const SingleItems = ({params}:{params:{mainpage:string}}) =>{
+
+interface SingleItemProp{
+    params:{
+        mainpage:string;
+    }
+}
+
+const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
 
 
         // import movie details to movie state
@@ -68,7 +75,7 @@ const SingleItems = ({params}:{params:{mainpage:string}}) =>{
 
 
         // import movie trailer and other videos to movieVideo
-        const [movieVideo, setMovieVideo] = useState([])
+        const [movieVideo, setMovieVideo] = useState<videoMovie | null>([])
 
 
         // checking is there api has videos
@@ -144,9 +151,9 @@ const SingleItems = ({params}:{params:{mainpage:string}}) =>{
             fetchData()
             
             // setIsLoading(false)  
-            if(movieVideo.length>0){
-                setIsvideo(false)
-            }
+            // if(movieVideo.length>0){
+            //     setIsvideo(false)
+            // }
         },[])
 
 
