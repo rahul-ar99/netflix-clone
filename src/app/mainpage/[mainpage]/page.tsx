@@ -1,10 +1,10 @@
 "use client"
 
-import Navbar from "@/app/components/Navbar"
-import Footer from "@/app/components/Footer"
+// import Navbar from "@/app/components/Navbar"
+// import Footer from "@/app/components/Footer"
 import { MOVIE_IMG_URL } from "@/app/axiosConfig"
 import { useEffect, useState } from "react"
-import Video from "./components/videos"
+import Video from "./_components/videos"
 import Link from "next/link"
 
 interface Movie{
@@ -173,7 +173,7 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
 
                 <div style={{backgroundImage:`linear-gradient(90deg,rgba(0, 0, 0, .9) 25%,rgba(0, 0, 0, .8) 40%,rgba(0,0,0,.0) 100%),url("https://image.tmdb.org/t/p/original/${movie.backdrop_path}")`}} className="h-screen w-screen bg-cover bg-no-repeat z-[-1]">
                     <div className="flex w-screen pr-6 bg-black items-center">   
-                        <Navbar />
+                        {/* <Navbar /> */}
                         <button className="px-3 py-2 h-min bg-red-600 font-bold rounded">Logout</button>
                     </div>
 
@@ -328,7 +328,7 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
                         })}
                     </div>
                 </div>
-                <Footer />
+                {/* <Footer /> */}
                 </div>
             }</>
             }

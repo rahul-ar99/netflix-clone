@@ -4,11 +4,10 @@ import Link  from "next/link"
 import { useRouter } from "next/navigation";
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar";
-import React, {useRef,ChangeEvent, useState} from "react"
-import { getAuth,signInWithEmailAndPassword } from "firebase/auth";
+import React, {useRef, useState} from "react"
+import {signInWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
-import axios from "axios"
-import { MouseEvent } from 'react';
+
 
 
 interface LogInProp {}
