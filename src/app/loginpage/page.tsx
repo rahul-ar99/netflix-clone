@@ -11,23 +11,23 @@ import axios from "axios"
 import { MouseEvent } from 'react';
 
 
-interface SignInProp {}
+interface LogInProp {}
 
 // export default function LoginPage(){
-const loginpage: React.FC<SignInProp> = () =>{
+const loginpage: React.FC<LogInProp> = () =>{
     // if user is entered correct details, then redirect to main page
     const router = useRouter();
 
     const [message, setMessage] = useState("")
-    const [emailInput, setEmail] = useState('');
-    const [passwordInput, setPassword] = useState('');
+    // const [emailInput, setEmail] = useState('');
+    // const [passwordInput, setPassword] = useState('');
 
-    const handleEmailchange = (e:ChangeEvent<HTMLInputElement>)=>{
-        setEmail(e.target.value)
-    }
-    const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>)=>{
-        setPassword(e.target.value)
-    }
+    // const handleEmailchange = (e:ChangeEvent<HTMLInputElement>)=>{
+    //     setEmail(e.target.value)
+    // }
+    // const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>)=>{
+    //     setPassword(e.target.value)
+    // }
 
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
@@ -36,7 +36,7 @@ const loginpage: React.FC<SignInProp> = () =>{
 
 
 
-    const login = (e: MouseEvent<HTMLFormElement>) =>{
+    const login = (e: React.FormEvent<HTMLFormElement>) =>{
         e.preventDefault();
         setMessage("")
         const email = emailRef.current?.value ?? "";

@@ -4,7 +4,7 @@ import Link  from "next/link"
 import { useRouter } from "next/navigation";
 import Footer from "../components/Footer"
 import Navbar from "../components/Navbar";
-import React, {useRef, useState} from "react"
+import {useRef, useState} from "react"
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../firebase";
 
@@ -22,9 +22,13 @@ export default function signinpage(){
 
     const [message, setMessage] = useState("")
   
+
     // create useRef element for email and password
     const emailRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
+
+
+
 
     // creating signin function
     const signin = (e: React.FormEvent<HTMLFormElement>) =>{
@@ -38,6 +42,8 @@ export default function signinpage(){
         const email = emailRef.current?.value;
         const password = passwordRef.current?.value;
 
+
+        
         if(email && password){
 
             // create user with firebase auth
