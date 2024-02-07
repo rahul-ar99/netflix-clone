@@ -147,15 +147,15 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
 
         // it's for when trailer video click modal is open and site scroll stop
         // then modal is close site scroll will scroll
-        useEffect(()=>{
-            if(videoModal===true){
-                document.body.style.overflow = "hidden"
-            }
-            else{
-                document.body.style.overflow = "auto"
+        // useEffect(()=>{
+        //     if(videoModal===true){
+        //         document.body.style.overflow = "hidden"
+        //     }
+        //     else{
+        //         document.body.style.overflow = "auto"
 
-            }
-        },[videoModal])
+        //     }
+        // },[videoModal])
         console.log(movie)
         
         
