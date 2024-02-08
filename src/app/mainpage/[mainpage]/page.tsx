@@ -70,10 +70,6 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
         const [movieVideo, setMovieVideo] = useState<videoMovie | null>(null)
 
 
-        // checking is there api has videos
-        const [isVideo, setIsvideo] = useState(true)
-
-
         // import upcoming movie details to 
         const [movieUpcoming, setMovieUpcoming] = useState<Upcoming |null>(null)
 
@@ -124,21 +120,21 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
                 const request5 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/similar?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response => response.json());
                 const request6 = fetch(`https://api.themoviedb.org/3/movie/${params.mainpage}/similar?api_key=c335ae1ffb9a62f766ee249471af6986`).then(response =>response.json());                
                 Promise.all([request1, request2,request3,request4, request5, request6])
-                .then(([data1, data2, data3, data4, data5 , data6]) => {
-                    setImageList(data1)
-                    setMovie(data2)
-                    setMovieVideo(data3.results)
-                    setMovieCredits(data4)
-                    setSimilarmovie(data5.results)
-                    setMovieUpcoming(data6.results)
-                    
-                    // load after set all data's
-                    setIsLoading(false)
-                })
-                .catch(error =>{
-                    console.error("error: ",error)
-                })
-            }
+                    .then(([data1, data2, data3, data4, data5 , data6]) => {
+                        setImageList(data1)
+                        setMovie(data2)
+                        setMovieVideo(data3.results)
+                        setMovieCredits(data4)
+                        setSimilarmovie(data5.results)
+                        setMovieUpcoming(data6.results)
+                        
+                        // load after set all data's
+                        setIsLoading(false)
+                    })
+                    .catch(error =>{
+                        console.error("error: ",error)
+                    })
+                }
             fetchData()
             
 
@@ -179,7 +175,7 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
                                         <span className="border-[1px] p-1">
                                         {movie.adult ?<p>A</p>:<p>U/A 7+</p>}
                                         </span>
-                                        <span>|</span>``
+                                        <span>|</span>
                                         <p>{time(movie.runtime)}</p>
                                         <span>|</span>
                                         <p>{movie.genres[0].name}</p>

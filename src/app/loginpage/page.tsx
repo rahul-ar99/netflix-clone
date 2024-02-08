@@ -41,7 +41,7 @@ const loginpage: React.FC<LogInProp> = () =>{
         const email = emailRef.current?.value ?? "";
         const password = passwordRef.current?.value ?? "";
 
-
+        
         signInWithEmailAndPassword(auth,email,password)
             .then((userCredential)=>{
                 const user = userCredential.user;
@@ -81,7 +81,6 @@ const loginpage: React.FC<LogInProp> = () =>{
                         <input className="h-12 w-full rounded bg-red-600 mt-3" type="submit" value="Log In"/>
                     </form>
                     <div className="text-slate-600">
-
                         <div className="flex justify-between">
                             <div>
                                 <input type="checkbox" id="rememberme" />
@@ -95,7 +94,6 @@ const loginpage: React.FC<LogInProp> = () =>{
                         <div>
                             <p>this page is protected by google recaptcha to ensure you're not a bot. <span className="text-blue-600">Learn more.</span></p>
                         </div>
-
                     </div>
                 </div>
             </div>
