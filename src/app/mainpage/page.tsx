@@ -3,8 +3,8 @@
 import { useEffect, useState } from "react";
 import ComponentMain from "./component";
 import Link from "next/link";
-// import Navbar from "../components/Navbar"
-// import Footer from "../components/Footer"
+import Navbar from "../components/Navbar"
+import Footer from "../components/Footer"
 import { signOut } from "firebase/auth";
 import { auth } from "../firebase";
 import { useRouter } from "next/navigation";
@@ -67,7 +67,7 @@ fetchGenre();
         return (
             <>
             <div className="flex pr-4 justify-center items-center bg-black">
-                {/* <Navbar /> */}
+                <Navbar />
                 <button className="p-2 h-min rounded-xl bg-red-600" onClick={handleLogout}>Logout</button>
             </div>
             <div className="px-14 pt-10">
@@ -97,7 +97,7 @@ fetchGenre();
             
                 </div>
             </div>
-            {/* <Footer /> */}
+            <Footer />
         </>
         )
     }

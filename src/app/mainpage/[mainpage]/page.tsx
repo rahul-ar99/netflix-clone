@@ -212,7 +212,7 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
                     </div>
 
                     <ul className="flex w-full">
-                        <Slider {...settings} className="w-full flex">
+                        {/* <Slider {...settings} className="w-full flex"> */}
 
                             {Array.isArray(movieVideo) && movieVideo.map((element, index)=>{
                                 if(index>=4){
@@ -239,7 +239,7 @@ const SingleItems: React.FC<SingleItemProp> = ({params}) =>{
                                     return null
                                 }
                             })}
-                        </Slider>
+                        {/* </Slider> */}
                     </ul>
                 </div>
                 <div className="px-20 flex flex-col mt-10">
